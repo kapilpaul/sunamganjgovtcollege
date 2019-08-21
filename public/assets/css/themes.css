@@ -1,0 +1,547 @@
+/*
+ *  Document   : themes.css
+ *  Author     : pixelcave
+ *  Description: The themes stylesheet of the template. The classes can be used to
+ *  alter the text, the background or the border color of an element individually
+ *
+ */
+
+/*
+=================================================================
+THEME DEFAULT
+=================================================================
+*/
+
+.themed-color-default {
+    color: #1bbae1 !important;
+}
+
+.themed-border-default {
+    border-color: #1bbae1 !important;
+}
+
+.themed-background-default {
+    background-color: #1bbae1 !important;
+}
+
+.themed-color-dark-default {
+    color: #394263 !important;
+}
+
+.themed-border-dark-default {
+    border-color: #394263 !important;
+}
+
+.themed-background-dark-default {
+    background-color: #394263 !important;
+}
+
+/*
+=================================================================
+THEME NIGHT
+=================================================================
+*/
+
+.themed-color-night {
+    color: #888888 !important;
+}
+
+.themed-border-night {
+    border-color: #888888 !important;
+}
+
+.themed-background-night {
+    background-color: #888888 !important;
+}
+
+.themed-color-dark-night {
+    color: #333333 !important;
+}
+
+.themed-border-dark-night {
+    border-color: #333333 !important;
+}
+
+.themed-background-dark-night {
+    background-color: #333333 !important;
+}
+
+/*
+=================================================================
+THEME AMETHYST
+=================================================================
+*/
+
+.themed-color-amethyst {
+    color: #af64cc !important;
+}
+
+.themed-border-amethyst {
+    border-color: #af64cc !important;
+}
+
+.themed-background-amethyst {
+    background-color: #af64cc !important;
+}
+
+.themed-color-dark-amethyst {
+    color: #583a63 !important;
+}
+
+.themed-border-dark-amethyst {
+    border-color: #583a63 !important;
+}
+
+.themed-background-dark-amethyst {
+    background-color: #583a63 !important;
+}
+
+/*
+=================================================================
+THEME MODERN
+=================================================================
+*/
+
+.themed-color-modern {
+    color: #46b7bf !important;
+}
+
+.themed-border-modern {
+    border-color: #46b7bf !important;
+}
+
+.themed-background-modern {
+    background-color: #46b7bf !important;
+}
+
+.themed-color-dark-modern {
+    color: #3b3f40 !important;
+}
+
+.themed-border-dark-modern {
+    border-color: #3b3f40 !important;
+}
+
+.themed-background-dark-modern {
+    background-color: #3b3f40 !important;
+}
+
+/*
+=================================================================
+THEME AUTUMN
+=================================================================
+*/
+
+.themed-color-autumn {
+    color: #e67e22 !important;
+}
+
+.themed-border-autumn {
+    border-color: #e67e22 !important;
+}
+
+.themed-background-autumn {
+    background-color: #e67e22 !important;
+}
+
+.themed-color-dark-autumn {
+    color: #4a392b !important;
+}
+
+.themed-border-dark-autumn {
+    border-color: #4a392b !important;
+}
+
+.themed-background-dark-autumn {
+    background-color: #4a392b !important;
+}
+
+/*
+=================================================================
+THEME FLATIE
+=================================================================
+*/
+
+.themed-color-flatie {
+    color: #1ec1b8 !important;
+}
+
+.themed-border-flatie {
+    border-color: #1ec1b8 !important;
+}
+
+.themed-background-flatie {
+    background-color: #1ec1b8 !important;
+}
+
+.themed-color-dark-flatie {
+    color: #32323a !important;
+}
+
+.themed-border-dark-flatie {
+    border-color: #32323a !important;
+}
+
+.themed-background-dark-flatie {
+    background-color: #32323a !important;
+}
+
+/*
+=================================================================
+THEME SPRING
+=================================================================
+*/
+
+.themed-color-spring {
+    color: #27ae60 !important;
+}
+
+.themed-border-spring {
+    border-color: #27ae60 !important;
+}
+
+.themed-background-spring {
+    background-color: #27ae60 !important;
+}
+
+.themed-color-dark-spring {
+    color: #344a3d !important;
+}
+
+.themed-border-dark-spring {
+    border-color: #344a3d !important;
+}
+
+.themed-background-dark-spring {
+    background-color: #344a3d !important;
+}
+
+/*
+=================================================================
+THEME FANCY
+=================================================================
+*/
+
+.themed-color-fancy {
+    color: #d9416c !important;
+}
+
+.themed-border-fancy {
+    border-color: #d9416c !important;
+}
+
+.themed-background-fancy {
+    background-color: #d9416c !important;
+}
+
+.themed-color-dark-fancy {
+    color: #352b4e !important;
+}
+
+.themed-border-dark-fancy {
+    border-color: #352b4e !important;
+}
+
+.themed-background-dark-fancy {
+    background-color: #352b4e !important;
+}
+
+/*
+=================================================================
+THEME FIRE
+=================================================================
+*/
+
+.themed-color-fire {
+    color: #e74c3c !important;
+}
+
+.themed-border-fire {
+    border-color: #e74c3c !important;
+}
+
+.themed-background-fire {
+    background-color: #e74c3c !important;
+}
+
+.themed-color-dark-fire {
+    color: #4a2e2b !important;
+}
+
+.themed-border-dark-fire {
+    border-color: #4a2e2b !important;
+}
+
+.themed-background-dark-fire {
+    background-color: #4a2e2b !important;
+}
+
+/*
+=================================================================
+THEME CORAL
+=================================================================
+*/
+
+.themed-color-coral {
+    color: #ff6b6b !important;
+}
+
+.themed-border-coral {
+    border-color: #ff6b6b !important;
+}
+
+.themed-background-coral {
+    background-color: #ff6b6b !important;
+}
+
+.themed-color-dark-coral {
+    color: #3c3e4f !important;
+}
+
+.themed-border-dark-coral {
+    border-color: #3c3e4f !important;
+}
+
+.themed-background-dark-coral {
+    background-color: #3c3e4f !important;
+}
+
+/*
+=================================================================
+THEME LAKE
+=================================================================
+*/
+
+.themed-color-lake {
+    color: #e38e7b !important;
+}
+
+.themed-border-lake {
+    border-color: #e38e7b !important;
+}
+
+.themed-background-lake {
+    background-color: #e38e7b !important;
+}
+
+.themed-color-dark-lake {
+    color: #043e50 !important;
+}
+
+.themed-border-dark-lake {
+    border-color: #043e50 !important;
+}
+
+.themed-background-dark-lake {
+    background-color: #043e50 !important;
+}
+
+/*
+=================================================================
+THEME FOREST
+=================================================================
+*/
+
+.themed-color-forest {
+    color: #0ead87 !important;
+}
+
+.themed-border-forest {
+    border-color: #0ead87 !important;
+}
+
+.themed-background-forest {
+    background-color: #0ead87 !important;
+}
+
+.themed-color-dark-forest {
+    color: #3b322c !important;
+}
+
+.themed-border-dark-forest {
+    border-color: #3b322c !important;
+}
+
+.themed-background-dark-forest {
+    background-color: #3b322c !important;
+}
+
+/*
+=================================================================
+THEME WATERLILY
+=================================================================
+*/
+
+.themed-color-waterlily {
+    color: #4ca5a9 !important;
+}
+
+.themed-border-waterlily {
+    border-color: #4ca5a9 !important;
+}
+
+.themed-background-waterlily {
+    background-color: #4ca5a9 !important;
+}
+
+.themed-color-dark-waterlily {
+    color: #4f243e !important;
+}
+
+.themed-border-dark-waterlily {
+    border-color: #4f243e !important;
+}
+
+.themed-background-dark-waterlily {
+    background-color: #4f243e !important;
+}
+
+/*
+=================================================================
+THEME EMERALD
+=================================================================
+*/
+
+.themed-color-emerald {
+    color: #69b899 !important;
+}
+
+.themed-border-emerald {
+    border-color: #69b899 !important;
+}
+
+.themed-background-emerald {
+    background-color: #69b899 !important;
+}
+
+.themed-color-dark-emerald {
+    color: #07313a !important;
+}
+
+.themed-border-dark-emerald {
+    border-color: #07313a !important;
+}
+
+.themed-background-dark-emerald {
+    background-color: #07313a !important;
+}
+
+
+/*
+=================================================================
+THEME BLACKBERRY
+=================================================================
+*/
+
+.themed-color-blackberry {
+    color: #148e81 !important;
+}
+
+.themed-border-blackberry {
+    border-color: #148e81 !important;
+}
+
+.themed-background-blackberry {
+    background-color: #148e81 !important;
+}
+
+.themed-color-dark-blackberry {
+    color: #352738 !important;
+}
+
+.themed-border-dark-blackberry {
+    border-color: #352738 !important;
+}
+
+.themed-background-dark-blackberry {
+    background-color: #352738 !important;
+}
+
+.mb-0{margin-bottom : 0px !important;}
+.mt-0{margin-top : 0px !important;}
+.ml-0{margin-left : 0px !important;}
+.mr-0{margin-right : 0px !important;}
+.pb-0{padding-bottom : 0px !important;}
+.pt-0{padding-top : 0px !important;}
+.pl-0{padding-left : 0px !important;}
+.pr-0{padding-right : 0px !important;}
+.mb-5{margin-bottom : 5px !important;}
+.mt-5{margin-top : 5px !important;}
+.ml-5{margin-left : 5px !important;}
+.mr-5{margin-right : 5px !important;}
+.pb-5{padding-bottom : 5px !important;}
+.pt-5{padding-top : 5px !important;}
+.pl-5{padding-left : 5px !important;}
+.pr-5{padding-right : 5px !important;}
+.mb-10{margin-bottom : 10px !important;}
+.mt-10{margin-top : 10px !important;}
+.ml-10{margin-left : 10px !important;}
+.mr-10{margin-right : 10px !important;}
+.pb-10{padding-bottom : 10px !important;}
+.pt-10{padding-top : 10px !important;}
+.pl-10{padding-left : 10px !important;}
+.pr-10{padding-right : 10px !important;}
+.mb-15{margin-bottom : 15px !important;}
+.mt-15{margin-top : 15px !important;}
+.ml-15{margin-left : 15px !important;}
+.mr-15{margin-right : 15px !important;}
+.pb-15{padding-bottom : 15px !important;}
+.pt-15{padding-top : 15px !important;}
+.pl-15{padding-left : 15px !important;}
+.pr-15{padding-right : 15px !important;}
+.mb-20{margin-bottom : 20px !important;}
+.mt-20{margin-top : 20px !important;}
+.ml-20{margin-left : 20px !important;}
+.mr-20{margin-right : 20px !important;}
+.pb-20{padding-bottom : 20px !important;}
+.pt-20{padding-top : 20px !important;}
+.pl-20{padding-left : 20px !important;}
+.pr-20{padding-right : 20px !important;}
+.mb-25{margin-bottom : 25px !important;}
+.mt-25{margin-top : 25px !important;}
+.ml-25{margin-left : 25px !important;}
+.mr-25{margin-right : 25px !important;}
+.pb-25{padding-bottom : 25px !important;}
+.pt-25{padding-top : 25px !important;}
+.pl-25{padding-left : 25px !important;}
+.pr-25{padding-right : 25px !important;}
+.mb-30{margin-bottom : 30px !important;}
+.mt-30{margin-top : 30px !important;}
+.ml-30{margin-left : 30px !important;}
+.mr-30{margin-right : 30px !important;}
+.pb-30{padding-bottom : 30px !important;}
+.pt-30{padding-top : 30px !important;}
+.pl-30{padding-left : 30px !important;}
+.pr-30{padding-right : 30px !important;}
+.mb-35{margin-bottom : 35px !important;}
+.mt-35{margin-top : 35px !important;}
+.ml-35{margin-left : 35px !important;}
+.mr-35{margin-right : 35px !important;}
+.pb-35{padding-bottom : 35px !important;}
+.pt-35{padding-top : 35px !important;}
+.pl-35{padding-left : 35px !important;}
+.pr-35{padding-right : 35px !important;}
+.mb-40{margin-bottom : 40px !important;}
+.mt-40{margin-top : 40px !important;}
+.ml-40{margin-left : 40px !important;}
+.mr-40{margin-right : 40px !important;}
+.pb-40{padding-bottom : 40px !important;}
+.pt-40{padding-top : 40px !important;}
+.pl-40{padding-left : 40px !important;}
+.pr-40{padding-right : 40px !important;}
+.mb-45{margin-bottom : 45px !important;}
+.mt-45{margin-top : 45px !important;}
+.ml-45{margin-left : 45px !important;}
+.mr-45{margin-right : 45px !important;}
+.pb-45{padding-bottom : 45px !important;}
+.pt-45{padding-top : 45px !important;}
+.pl-45{padding-left : 45px !important;}
+.pr-45{padding-right : 45px !important;}
+.mb-50{margin-bottom : 50px !important;}
+.mt-50{margin-top : 50px !important;}
+.ml-50{margin-left : 50px !important;}
+.mr-50{margin-right : 50px !important;}
+.pb-50{padding-bottom : 50px !important;}
+.pt-50{padding-top : 50px !important;}
+.pl-50{padding-left : 50px !important;}
+.pr-50{padding-right : 50px !important;}
