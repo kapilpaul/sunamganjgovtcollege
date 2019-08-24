@@ -6,11 +6,11 @@
 <head>
     <meta charset="utf-8">
 
-    <title>@yield('title', 'Sunamganj Govt College') - Sunamganj Govt College</title>
+    <title>@yield('title', 'Sunamganj College') - {{ env('APP_NAME') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta name="description"
-          content="Sunamganj Govt College is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
-    <meta name="author" content="pixelcave">
+    <meta name="description" content="Sunamganj College.">
+    <meta name="author" content="kapil">
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 

@@ -16,7 +16,7 @@
     <div id="login-container" class="animation-fadeIn">
         <!-- Login Title -->
         <div class="login-title text-center">
-            <h1><i class="gi gi-flash"></i> <strong>Sunamganj Govt College</strong><br>
+            <h1><i class="gi gi-flash"></i> <strong>Sunamganj College</strong><br>
                 <small>Please <strong>Login</strong></small>
             </h1>
         </div>

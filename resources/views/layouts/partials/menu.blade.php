@@ -6,7 +6,7 @@
         <div class="sidebar-content">
             <!-- Brand -->
             <a href="#" class="sidebar-brand">
-                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Sunamganj Govt College</strong></span>
+                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Sunamganj College</strong></span>
             </a>
             <!-- END Brand -->
 

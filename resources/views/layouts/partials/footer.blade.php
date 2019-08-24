@@ -1,6 +1,8 @@
 <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
 @stack('footer_top_js')
 
+<script src="{{ mix('js/app.js') }}"></script>
+
 <script src="{{ asset('assets/js/vendor/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.js') }}"></script>

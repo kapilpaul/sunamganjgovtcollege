@@ -5,7 +5,7 @@
                                                                    target="_blank">Kapil</a>
     </div>
     <div class="pull-left">
-        <span id="year-copy"></span> &copy; <a href="#" target="_blank">Sunamganj Govt College 1.0</a>
+        <span id="year-copy"></span> &copy; <a href="#" target="_blank">Sunamganj College 1.0</a>
     </div>
 </footer>
 <!-- END Footer -->
