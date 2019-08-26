@@ -1,6 +1,8 @@
 <template>
   <div class="form-group">
     <label>{{ label }}</label>
+    <small class="text-muted d-block mb-10" v-if="helptext !== ''">{{helptext}}</small>
+
     <input
       :type="type"
       class="form-control"
@@ -38,6 +40,10 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    helptext: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -49,4 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.d-block {
+  display: block;
+}
 </style>
