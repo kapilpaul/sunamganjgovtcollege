@@ -17,6 +17,32 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="#top">Home</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registraion (Participate) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ route('participant.create', 'current-student') }}">
+                                Current Student
+                            </a>
+                        </li>
+                        <li><a href="{{ route('participant.create', 'former-student') }}">Former Student</a></li>
+                        <li><a href="{{ route('participant.create', 'immigrant-former-student') }}">Immigrant Former Student</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Only Registraion <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ route('participant.create', 'current-student') }}?registeronly=true">
+                                Current Student
+                            </a>
+                        </li>
+                        <li><a href="{{ route('participant.create', 'former-student') }}?registeronly=true">Former Student</a></li>
+                        <li><a href="{{ route('participant.create', 'immigrant-former-student') }}?registeronly=true">Immigrant Former Student</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!--/.nav-collapse -->

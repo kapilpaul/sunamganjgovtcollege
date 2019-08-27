@@ -2,7 +2,7 @@
   <div>
     <div class="registration-form p-0 pb-100">
       <span class="addtocalendar atc-style-theme registrationPriceFloating">
-        <a class="atcb-link" tabindex="1" id>{{ totalAmount }}</a>
+        <a class="atcb-link" tabindex="1" id>{{moneySymbol}} {{ totalAmount }}</a>
       </span>
 
       <form action method="POST" target="_top" id>
@@ -240,57 +240,59 @@
           </div>
         </div>
 
-        <h6>Possible Accompanies</h6>
-        <div
-          class="row mt-15 mb-15"
-          v-for="(item, keyIndex) in participantData.guests"
-          :key="componentKey+keyIndex"
-        >
-          <div class="col-md-4">
-            <input-text
-              label="Guest Name"
-              name="Guest_name"
-              placeholder="Guest Name"
-              :required="true"
-              v-model="item.name"
-            ></input-text>
+        <div v-if="!currentStudent && !registerOnly">
+          <h6>Possible Accompanies</h6>
+          <div
+            class="row mt-15 mb-15"
+            v-for="(item, keyIndex) in participantData.guests"
+            :key="componentKey+keyIndex"
+          >
+            <div class="col-md-4">
+              <input-text
+                label="Guest Name"
+                name="Guest_name"
+                placeholder="Guest Name"
+                :required="true"
+                v-model="item.name"
+              ></input-text>
+            </div>
+            <div class="col-md-3">
+              <input-text
+                label="Relation"
+                name="relation"
+                placeholder="Relation"
+                :required="true"
+                v-model="item.relation"
+              ></input-text>
+            </div>
+            <div class="col-md-2">
+              <input-text
+                label="Age"
+                name="age"
+                placeholder="Age"
+                :required="true"
+                v-model="item.age"
+              ></input-text>
+            </div>
+            <div class="col-md-2">
+              <image-upload v-model="item.image"></image-upload>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
           </div>
-          <div class="col-md-3">
-            <input-text
-              label="Relation"
-              name="relation"
-              placeholder="Relation"
-              :required="true"
-              v-model="item.relation"
-            ></input-text>
-          </div>
-          <div class="col-md-2">
-            <input-text
-              label="Age"
-              name="age"
-              placeholder="Age"
-              :required="true"
-              v-model="item.age"
-            ></input-text>
-          </div>
-          <div class="col-md-2">
-            <image-upload v-model="item.image"></image-upload>
-          </div>
-          <div class="col-md-1">
-            <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
-              <i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
 
-        <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">Add Guest</button>
+          <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">Add Guest</button>
+        </div>
 
         <div class="row">
           <div class="col-md-offset-4 col-md-4">
             <div class="pricing-item highlighted-plan wow zoomIn mt-20">
               <div class="plan-name">Registration Price</div>
               <div class="price">
-                <span class="curr">৳</span>
+                <span class="curr">{{ moneySymbol }}</span>
                 {{ totalAmount }}
               </div>
             </div>
@@ -312,6 +314,14 @@ import { countries, registrationPrice } from "../../Constants";
 export default {
   props: {
     currentStudent: {
+      type: Boolean,
+      default: false
+    },
+    immigrantStudent: {
+      type: Boolean,
+      default: false
+    },
+    registerOnly: {
       type: Boolean,
       default: false
     }
@@ -341,12 +351,12 @@ export default {
           occupation_name: ""
         },
         guests: [
-          {
-            name: "",
-            relation: "",
-            age: "",
-            image: ""
-          }
+          // {
+          //   name: "",
+          //   relation: "",
+          //   age: "",
+          //   image: ""
+          // }
         ]
       },
       countries: countries,
@@ -369,19 +379,41 @@ export default {
         "Non-Resident",
         "Others"
       ],
-      componentKey: 0
+      componentKey: 0,
+      selfRegPrice: 0,
+      guestRegPrice: 0,
+      moneySymbol: this.immigrantStudent ? "$" : "৳"
     };
   },
   components: {
     inputText,
     imageUpload
   },
+  mounted() {
+    if (this.immigrantStudent) {
+      this.selfRegPrice = registrationPrice.immigrant_former_student.self;
+      this.guestRegPrice = registrationPrice.immigrant_former_student.guest;
+    } else {
+      this.selfRegPrice = registrationPrice.former_student_in_bd.self;
+      this.guestRegPrice = registrationPrice.former_student_in_bd.guest;
+    }
+
+    if (this.currentStudent) {
+      this.selfRegPrice = registrationPrice.current_student;
+      this.guestRegPrice = 0;
+    }
+
+    if (this.registerOnly) {
+      this.selfRegPrice = registrationPrice.only_registration;
+      this.guestRegPrice = 0;
+      this.moneySymbol = "৳";
+    }
+  },
   computed: {
     totalAmount() {
       return (
-        registrationPrice.former_student_in_bd.self +
-        this.participantData.guests.length *
-          registrationPrice.former_student_in_bd.guest
+        this.selfRegPrice +
+        this.participantData.guests.length * this.guestRegPrice
       );
     }
   },
@@ -397,9 +429,6 @@ export default {
     removeGuest(index) {
       this.participantData.guests.splice(index, 1);
       this.componentKey += index + 1;
-    },
-    test(val) {
-      console.log(val);
     }
   }
 };

@@ -4,14 +4,14 @@
     <img
       :src="image"
       alt="Photo"
-      class="img-thumbnail mb-15"
+      class="img-thumbnail mb-10"
       width="100%"
       id="imagePreview"
       style="cursor:pointer;"
       @click="selectImage"
     />
-    <p class="mt-10" v-if="image_upload_error">
-      <span class="image-upload-error">Image dimension should be 400x200</span>
+    <p class="mt-5" v-if="image_upload_error">
+      <span class="image-upload-error text-danger">Image dimension should be 300x300</span>
     </p>
   </div>
 </template>
@@ -37,16 +37,16 @@ export default {
           let image = new Image();
           image.src = e.target.result;
           image.onload = uploadedImage => {
-            // if (
-            //   uploadedImage.target.width === 400 &&
-            //   uploadedImage.target.height === 200
-            // ) {
-            this.image = e.target.result; //.("src", e.target.result);
-            this.image_upload_error = false;
-            this.$emit("input", this.image);
-            // } else {
-            //   this.image_upload_error = true;
-            // }
+            if (
+              uploadedImage.target.width === 300 &&
+              uploadedImage.target.height === 300
+            ) {
+              this.image = e.target.result; //.("src", e.target.result);
+              this.image_upload_error = false;
+              this.$emit("input", this.image);
+            } else {
+              this.image_upload_error = true;
+            }
           };
         };
         fileReader.readAsDataURL(e.target.files[0]);
@@ -57,4 +57,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.img-thumbnail {
+  max-width: 300px;
+  max-height: 300px;
+}
 </style>

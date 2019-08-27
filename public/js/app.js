@@ -50998,6 +50998,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -51005,6 +51007,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     currentStudent: {
+      type: Boolean,
+      default: false
+    },
+    immigrantStudent: {
+      type: Boolean,
+      default: false
+    },
+    registerOnly: {
       type: Boolean,
       default: false
     }
@@ -51033,17 +51043,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           company_name: "",
           occupation_name: ""
         },
-        guests: [{
-          name: "",
-          relation: "",
-          age: "",
-          image: ""
-        }]
+        guests: [
+          // {
+          //   name: "",
+          //   relation: "",
+          //   age: "",
+          //   image: ""
+          // }
+        ]
       },
       countries: __WEBPACK_IMPORTED_MODULE_2__Constants__["a" /* countries */],
       classes: ["1st year HSC", "1st year BA", "1st year BSc", "1st year BCom", "1st Year 3-4 year Hounors", "1st year Master"],
       occupations: ["Doctor", "Engineer", "Lawyer", "Service holder", "Business Person", "House wife", "Retired Person", "Non-Resident", "Others"],
-      componentKey: 0
+      componentKey: 0,
+      selfRegPrice: 0,
+      guestRegPrice: 0,
+      moneySymbol: this.immigrantStudent ? "$" : "৳"
     };
   },
 
@@ -51051,9 +51066,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     inputText: __WEBPACK_IMPORTED_MODULE_0__common_form_input_text___default.a,
     imageUpload: __WEBPACK_IMPORTED_MODULE_1__common_upload_image___default.a
   },
+  mounted: function mounted() {
+    if (this.immigrantStudent) {
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].immigrant_former_student.self;
+      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].immigrant_former_student.guest;
+    } else {
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.self;
+      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.guest;
+    }
+
+    if (this.currentStudent) {
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].current_student;
+      this.guestRegPrice = 0;
+    }
+
+    if (this.registerOnly) {
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].only_registration;
+      this.guestRegPrice = 0;
+      this.moneySymbol = "৳";
+    }
+  },
+
   computed: {
     totalAmount: function totalAmount() {
-      return __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.self + this.participantData.guests.length * __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.guest;
+      return this.selfRegPrice + this.participantData.guests.length * this.guestRegPrice;
     }
   },
   methods: {
@@ -51356,7 +51392,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.img-thumbnail[data-v-746fdfaa] {\n  max-width: 300px;\n  max-height: 300px;\n}\n", ""]);
 
 // exports
 
@@ -51409,16 +51445,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           var image = new Image();
           image.src = e.target.result;
           image.onload = function (uploadedImage) {
-            // if (
-            //   uploadedImage.target.width === 400 &&
-            //   uploadedImage.target.height === 200
-            // ) {
-            _this.image = e.target.result; //.("src", e.target.result);
-            _this.image_upload_error = false;
-            _this.$emit("input", _this.image);
-            // } else {
-            //   this.image_upload_error = true;
-            // }
+            if (uploadedImage.target.width === 300 && uploadedImage.target.height === 300) {
+              _this.image = e.target.result; //.("src", e.target.result);
+              _this.image_upload_error = false;
+              _this.$emit("input", _this.image);
+            } else {
+              _this.image_upload_error = true;
+            }
           };
         };
         fileReader.readAsDataURL(e.target.files[0]);
@@ -51444,7 +51477,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("img", {
-      staticClass: "img-thumbnail mb-15",
+      staticClass: "img-thumbnail mb-10",
       staticStyle: { cursor: "pointer" },
       attrs: {
         src: _vm.image,
@@ -51456,9 +51489,9 @@ var render = function() {
     }),
     _vm._v(" "),
     _vm.image_upload_error
-      ? _c("p", { staticClass: "mt-10" }, [
-          _c("span", { staticClass: "image-upload-error" }, [
-            _vm._v("Image dimension should be 400x200")
+      ? _c("p", { staticClass: "mt-5" }, [
+          _c("span", { staticClass: "image-upload-error text-danger" }, [
+            _vm._v("Image dimension should be 300x300")
           ])
         ])
       : _vm._e()
@@ -51485,6 +51518,7 @@ var countries = ["Afghanistan", "Åland Islands", "Albania", "Algeria", "America
 
 var registrationPrice = {
     current_student: 300,
+    only_registration: 300,
     former_student_in_bd: {
         self: 1000,
         guest: 500
@@ -51514,7 +51548,7 @@ var render = function() {
           _c(
             "a",
             { staticClass: "atcb-link", attrs: { tabindex: "1", id: "" } },
-            [_vm._v(_vm._s(_vm.totalAmount))]
+            [_vm._v(_vm._s(_vm.moneySymbol) + " " + _vm._s(_vm.totalAmount))]
           )
         ]
       ),
@@ -52250,134 +52284,142 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("h6", [_vm._v("Possible Accompanies")]),
-          _vm._v(" "),
-          _vm._l(_vm.participantData.guests, function(item, keyIndex) {
-            return _c(
-              "div",
-              {
-                key: _vm.componentKey + keyIndex,
-                staticClass: "row mt-15 mb-15"
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "col-md-4" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Guest Name",
-                        name: "Guest_name",
-                        placeholder: "Guest Name",
-                        required: true
+          !_vm.currentStudent && !_vm.registerOnly
+            ? _c(
+                "div",
+                [
+                  _c("h6", [_vm._v("Possible Accompanies")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.participantData.guests, function(item, keyIndex) {
+                    return _c(
+                      "div",
+                      {
+                        key: _vm.componentKey + keyIndex,
+                        staticClass: "row mt-15 mb-15"
                       },
-                      model: {
-                        value: item.name,
-                        callback: function($$v) {
-                          _vm.$set(item, "name", $$v)
-                        },
-                        expression: "item.name"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-3" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Relation",
-                        name: "relation",
-                        placeholder: "Relation",
-                        required: true
-                      },
-                      model: {
-                        value: item.relation,
-                        callback: function($$v) {
-                          _vm.$set(item, "relation", $$v)
-                        },
-                        expression: "item.relation"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-2" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Age",
-                        name: "age",
-                        placeholder: "Age",
-                        required: true
-                      },
-                      model: {
-                        value: item.age,
-                        callback: function($$v) {
-                          _vm.$set(item, "age", $$v)
-                        },
-                        expression: "item.age"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-2" },
-                  [
-                    _c("image-upload", {
-                      model: {
-                        value: item.image,
-                        callback: function($$v) {
-                          _vm.$set(item, "image", $$v)
-                        },
-                        expression: "item.image"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1" }, [
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "col-md-4" },
+                          [
+                            _c("input-text", {
+                              attrs: {
+                                label: "Guest Name",
+                                name: "Guest_name",
+                                placeholder: "Guest Name",
+                                required: true
+                              },
+                              model: {
+                                value: item.name,
+                                callback: function($$v) {
+                                  _vm.$set(item, "name", $$v)
+                                },
+                                expression: "item.name"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-3" },
+                          [
+                            _c("input-text", {
+                              attrs: {
+                                label: "Relation",
+                                name: "relation",
+                                placeholder: "Relation",
+                                required: true
+                              },
+                              model: {
+                                value: item.relation,
+                                callback: function($$v) {
+                                  _vm.$set(item, "relation", $$v)
+                                },
+                                expression: "item.relation"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-2" },
+                          [
+                            _c("input-text", {
+                              attrs: {
+                                label: "Age",
+                                name: "age",
+                                placeholder: "Age",
+                                required: true
+                              },
+                              model: {
+                                value: item.age,
+                                callback: function($$v) {
+                                  _vm.$set(item, "age", $$v)
+                                },
+                                expression: "item.age"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-2" },
+                          [
+                            _c("image-upload", {
+                              model: {
+                                value: item.image,
+                                callback: function($$v) {
+                                  _vm.$set(item, "image", $$v)
+                                },
+                                expression: "item.image"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-1" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm bg-danger mt-30",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.removeGuest(keyIndex)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-times" })]
+                          )
+                        ])
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-sm bg-danger mt-30",
+                      staticClass: "btn btn-success btn-sm mb-25",
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.removeGuest(keyIndex)
+                          return _vm.addGuest($event)
                         }
                       }
                     },
-                    [_c("i", { staticClass: "fa fa-times" })]
+                    [_vm._v("Add Guest")]
                   )
-                ])
-              ]
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success btn-sm mb-25",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.addGuest($event)
-                }
-              }
-            },
-            [_vm._v("Add Guest")]
-          ),
+                ],
+                2
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-offset-4 col-md-4" }, [
@@ -52392,7 +52434,9 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "price" }, [
-                    _c("span", { staticClass: "curr" }, [_vm._v("৳")]),
+                    _c("span", { staticClass: "curr" }, [
+                      _vm._v(_vm._s(_vm.moneySymbol))
+                    ]),
                     _vm._v(
                       "\n              " +
                         _vm._s(_vm.totalAmount) +
@@ -52405,8 +52449,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _vm._m(0)
-        ],
-        2
+        ]
       )
     ])
   ])

@@ -12,8 +12,12 @@
                     <p class="lead">Sunamganj Govt. College's Platinum Jubilee 2020 Organized by former students and students</p>
                 </div>
 
-                {{--<participant-create :current-student="true"></participant-create>--}}
-                <participant-create></participant-create>
+
+                <participant-create
+                        :current-student="{!! $currentStudent !!}"
+                        :immigrant-student="{!! $immigrantStudent !!}"
+                        :register-only="{!! $registerOnly !!}"
+                ></participant-create>
             </div>
         </div>
     </div>

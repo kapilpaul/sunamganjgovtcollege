@@ -10,7 +10,8 @@
  * Namespace: Participants
  */
 Route::group(['namespace' => 'Participant'], function () {
-    Route::get('register', 'Participants@create')->name('participant.create');
+//    Route::get('register', 'ParticipantsController@create')->name('participant.create');
+    Route::get('register/{studentStatus}', 'ParticipantsController@create')->name('participant.create');
 });
 
 

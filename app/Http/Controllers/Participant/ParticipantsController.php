@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Participant;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
-class Participants extends Controller
+class ParticipantsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +21,23 @@ class Participants extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param bool $studentStatus
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($studentStatus = false)
     {
-        return view('frontend.participants.create');
+        $currentStudent = $immigrantStudent = $registerOnly = "false";
+        if($studentStatus == 'current-student') {
+            $currentStudent = "true";
+        } else if($studentStatus == 'immigrant-former-student') {
+            $immigrantStudent = "true";
+        }
+
+        if(Input::get('registeronly')) {
+            $registerOnly = "true";
+        }
+
+        return view('frontend.participants.create', compact('currentStudent', 'immigrantStudent', 'registerOnly'));
     }
 
     /**
