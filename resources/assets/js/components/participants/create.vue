@@ -308,6 +308,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import inputText from "../common/form/input-text";
 import imageUpload from "../common/upload/image";
 import { countries, registrationPrice } from "../../Constants";

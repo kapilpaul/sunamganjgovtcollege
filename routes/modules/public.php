@@ -10,8 +10,11 @@
  * Namespace: Participants
  */
 Route::group(['namespace' => 'Participant'], function () {
-//    Route::get('register', 'ParticipantsController@create')->name('participant.create');
-    Route::get('register/{studentStatus}', 'ParticipantsController@create')->name('participant.create');
+    if (request()->is('api/*')) {
+        Route::get('register/store', 'ParticipantsController@create')->name('api.participant.store');
+    } else {
+        Route::get('register/{studentStatus}', 'ParticipantsController@create')->name('participant.create');
+    }
 });
 
 
