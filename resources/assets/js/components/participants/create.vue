@@ -256,7 +256,7 @@
                 v-model="item.name"
               ></input-text>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <input-text
                 label="Relation"
                 name="relation"
@@ -265,7 +265,7 @@
                 v-model="item.relation"
               ></input-text>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <input-text
                 label="Age"
                 name="age"
@@ -274,9 +274,9 @@
                 v-model="item.age"
               ></input-text>
             </div>
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
               <image-upload v-model="item.image"></image-upload>
-            </div>
+            </div>-->
             <div class="col-md-1">
               <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
                 <i class="fa fa-times"></i>
@@ -308,7 +308,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import inputText from "../common/form/input-text";
 import imageUpload from "../common/upload/image";
 import { countries, registrationPrice } from "../../Constants";
@@ -423,8 +423,7 @@ export default {
       this.participantData.guests.push({
         name: "",
         relation: "",
-        age: "",
-        image: ""
+        age: ""
       });
     },
     removeGuest(index) {

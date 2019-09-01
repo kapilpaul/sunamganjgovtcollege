@@ -113,20 +113,9 @@ class ParticipantsController extends Controller
     public function customRules($request)
     {
 //        participantData: {
-//        title: "Mr.",
-//        name: "",
-//        year_of_birth: -1,
-//        admission_year: -1,
-//        class: -1,
-//        group: -1,
+//
 //        subject: "",
-//        address: "",
-//        city: "",
-//        state: "",
-//        country: -1,
-//        zip_code: "",
-//        mobile_no: "",
-//        email: "",
+//
 //        occupation: -1,
 //        occupation_details: {
 //            designation: "",
@@ -142,7 +131,16 @@ class ParticipantsController extends Controller
             'admission_year' => ['required', 'numeric', Rule::notIn(["-1"])],
             'class' => ['required', Rule::notIn(["-1"])],
             'group' => ['required', Rule::notIn(["-1"])],
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => ['required', Rule::notIn(["-1"])],
+            'zip_code' => 'required',
+            'mobile_no' => 'required',
+            'email' => 'required|email',
+            'occupation' => ['required', Rule::notIn(["-1"])],
         ];
+
         $customMessages = [
             'required' => 'The :attribute field can not be blank.',
             'numeric' => 'The :attribute field must be numeric.'
