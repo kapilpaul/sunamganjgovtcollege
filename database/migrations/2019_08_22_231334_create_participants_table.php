@@ -20,7 +20,7 @@ class CreateParticipantsTable extends Migration
             $table->string('email')->nullable();
             $table->string('mobile_no');
             $table->string('image');
-            $table->date('date_of_birth');
+            $table->string('year_of_birth');
             $table->string('admission_year');
             $table->string('class');
             $table->string('group');

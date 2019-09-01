@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Participant;
 
+use App\Models\Participant\Guest;
+use App\Models\Participant\Participants;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -55,10 +59,56 @@ class ParticipantsController extends Controller
         }
 
         try {
+            $input = $request->all();
+            $input['uid'] = Str::uuid();
+            $imagename = $this->storeImage($request->image, Str::slug($input['name']));
+
+            $input['image'] = Storage::url('uploads/' . $imagename);
+            $input['occupation_details'] = json_encode($request->occupation_details);
+
+            if ($participant = Participants::create($input)) {
+                if (count($request->guests)) {
+                    foreach ($request->guests as $guest) {
+                        $guest['participant_id'] = $participant->id;
+                        Guest::create($guest);
+                    }
+                }
+                return response()->json(['participant' => $participant], 200);
+            }
+
 
         } catch (\Exception $e) {
-            return response()->json(['error' => "Server Error!"], 500);
+            return response()->json(['errors' => $e->getMessage()], 500);
+            return response()->json(['errors' => "Server Error!"], 500);
         }
+    }
+
+    /**
+     * @param $base64_image
+     * @param $name
+     * @return bool
+     */
+    public function storeImage($base64_image, $name)
+    {
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64_image)) {
+            $pos = strpos($base64_image, ';');
+            $type = explode(':', substr($base64_image, 0, $pos))[1];
+            $fileType = explode('/', $type)[0];
+            $extension = explode('/', $type)[1];
+
+            if ($fileType == 'image') {
+                if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') {
+                    $name = $name . '.jpg';
+                    $data = substr($base64_image, strpos($base64_image, ',') + 1);
+
+                    $data = base64_decode($data);
+                    $store = Storage::disk('local')->put("uploads/" . $name, $data);
+                    return $name;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -112,21 +162,10 @@ class ParticipantsController extends Controller
      */
     public function customRules($request)
     {
-//        participantData: {
-//
-//        subject: "",
-//
-//        occupation: -1,
-//        occupation_details: {
-//            designation: "",
-//          department: "",
-//          company_name: "",
-//          occupation_name: ""
-//        },
-//      },
         $rules = [
             'title' => 'required',
             'name' => 'required',
+            'image' => 'required',
             'year_of_birth' => ['required', 'numeric', Rule::notIn(["-1"])],
             'admission_year' => ['required', 'numeric', Rule::notIn(["-1"])],
             'class' => ['required', Rule::notIn(["-1"])],
@@ -141,10 +180,17 @@ class ParticipantsController extends Controller
             'occupation' => ['required', Rule::notIn(["-1"])],
         ];
 
+        if (count($request->guests) > 0) {
+            $rules['guests.*.name'] = 'required';
+            $rules['guests.*.relation'] = ['required', Rule::notIn(["-1"])];
+            $rules['guests.*.age'] = 'required';
+        }
+
         $customMessages = [
             'required' => 'The :attribute field can not be blank.',
             'numeric' => 'The :attribute field must be numeric.'
         ];
+
         $validator = Validator::make($request->all(), $rules, $customMessages);
 
         if ($validator->fails()) {

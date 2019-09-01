@@ -10,6 +10,7 @@
       :placeholder="placeholder"
       :required="required"
       @input="$emit('input', $event.target.value)"
+      :value="value"
     />
   </div>
 </template>

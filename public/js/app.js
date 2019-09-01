@@ -402,110 +402,6 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 /*
@@ -587,7 +483,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -815,7 +711,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -924,7 +820,117 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(22);
+
+/***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(25);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ }),
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3537,7 +3543,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -14142,12 +14148,6 @@ return jQuery;
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(22);
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14603,7 +14603,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(62);
+module.exports = __webpack_require__(67);
 
 
 /***/ }),
@@ -14612,7 +14612,7 @@ module.exports = __webpack_require__(62);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_index__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_participants_create__ = __webpack_require__(45);
@@ -14665,7 +14665,7 @@ var app = new Vue({
 
 
 window._ = __webpack_require__(19);
-window.Popper = __webpack_require__(6).default;
+window.Popper = __webpack_require__(7).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -14674,7 +14674,7 @@ window.Popper = __webpack_require__(6).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(7);
+  window.$ = window.jQuery = __webpack_require__(8);
 
   __webpack_require__(21);
 } catch (e) {}
@@ -14685,7 +14685,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(8);
+window.axios = __webpack_require__(5);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -31878,7 +31878,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(7), __webpack_require__(6)) :
+   true ? factory(exports, __webpack_require__(8), __webpack_require__(7)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (global = global || self, factory(global.bootstrap = {}, global.jQuery, global.Popper));
 }(this, function (exports, $, Popper) { 'use strict';
@@ -36319,7 +36319,7 @@ module.exports = function(module) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(24);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(6);
 
 /**
  * Create an instance of Axios
@@ -36392,7 +36392,7 @@ module.exports = function isBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(6);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(32);
 var dispatchRequest = __webpack_require__(33);
@@ -36888,7 +36888,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(34);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(6);
 var isAbsoluteURL = __webpack_require__(35);
 var combineURLs = __webpack_require__(36);
 
@@ -50565,11 +50565,11 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(46)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(49)
 /* template */
-var __vue_template__ = __webpack_require__(61)
+var __vue_template__ = __webpack_require__(66)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50618,7 +50618,7 @@ var content = __webpack_require__(47);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("71de9e76", content, false, {});
+var update = __webpack_require__(3)("71de9e76", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -50637,7 +50637,7 @@ if(false) {
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -50686,11 +50686,15 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_form_input_text__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_form_input_text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__common_form_input_text__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_upload_image__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_upload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__common_upload_image__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_errors__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_errors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__common_errors__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_form_input_text__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_form_input_text___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__common_form_input_text__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__common_upload_image__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Constants__ = __webpack_require__(65);
 //
 //
 //
@@ -51000,6 +51004,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -51024,6 +51036,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       participantData: {
         title: "Mr.",
         name: "",
+        image: "",
         year_of_birth: -1,
         admission_year: -1,
         class: -1,
@@ -51043,18 +51056,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           company_name: "",
           occupation_name: ""
         },
-        guests: [
-          // {
-          //   name: "",
-          //   relation: "",
-          //   age: "",
-          //   image: ""
-          // }
-        ]
+        guests: []
       },
-      countries: __WEBPACK_IMPORTED_MODULE_2__Constants__["a" /* countries */],
+      countries: __WEBPACK_IMPORTED_MODULE_4__Constants__["a" /* countries */],
       classes: ["1st year HSC", "1st year BA", "1st year BSc", "1st year BCom", "1st Year 3-4 year Hounors", "1st year Master"],
       occupations: ["Doctor", "Engineer", "Lawyer", "Service holder", "Business Person", "House wife", "Retired Person", "Non-Resident", "Others"],
+      relations: ["Husband", "Wife", "Son", "Daughter", "Relative", "Personal Staff", "Driver", "Maids", "Others"],
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
@@ -51063,25 +51070,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   components: {
-    inputText: __WEBPACK_IMPORTED_MODULE_0__common_form_input_text___default.a,
-    imageUpload: __WEBPACK_IMPORTED_MODULE_1__common_upload_image___default.a
+    inputText: __WEBPACK_IMPORTED_MODULE_2__common_form_input_text___default.a,
+    imageUpload: __WEBPACK_IMPORTED_MODULE_3__common_upload_image___default.a,
+    errors: __WEBPACK_IMPORTED_MODULE_1__common_errors___default.a
   },
   mounted: function mounted() {
     if (this.immigrantStudent) {
-      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].immigrant_former_student.self;
-      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].immigrant_former_student.guest;
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].immigrant_former_student.self;
+      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].immigrant_former_student.guest;
     } else {
-      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.self;
-      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].former_student_in_bd.guest;
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].former_student_in_bd.self;
+      this.guestRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].former_student_in_bd.guest;
     }
 
     if (this.currentStudent) {
-      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].current_student;
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].current_student;
       this.guestRegPrice = 0;
     }
 
     if (this.registerOnly) {
-      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_2__Constants__["b" /* registrationPrice */].only_registration;
+      this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].only_registration;
       this.guestRegPrice = 0;
       this.moneySymbol = "৳";
     }
@@ -51097,16 +51105,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.participantData.guests.push({
         name: "",
         relation: "",
-        age: "",
-        image: ""
+        age: ""
       });
     },
     removeGuest: function removeGuest(index) {
       this.participantData.guests.splice(index, 1);
       this.componentKey += index + 1;
     },
-    test: function test(val) {
-      console.log(val);
+    submit: function submit() {
+      this.$store.dispatch("setValidationErrors", "");
+
+      var data = this.participantData;
+
+      if (this.currentStudent) {
+        data.current_student = this.currentStudent;
+      }
+
+      if (this.registerOnly) {
+        data.only_register = this.registerOnly;
+      }
+
+      if (this.immigrantStudent) {
+        data.outside_of_bd = true;
+      }
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("register/store", data).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error.data);
+      });
     }
   }
 });
@@ -51120,11 +51147,269 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(51)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
 var __vue_template__ = __webpack_require__(54)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-a1dcdff0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/common/errors.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a1dcdff0", Component.options)
+  } else {
+    hotAPI.reload("data-v-a1dcdff0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(52);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("1184531c", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a1dcdff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./errors.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a1dcdff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./errors.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nul.list-group[data-v-a1dcdff0] {\n  /* padding: 0 15px; */\n}\n.list-group li[data-v-a1dcdff0] {\n  display: block;\n  padding: 0 15px;\n}\n.list-group li p[data-v-a1dcdff0] {\n  display: list-item;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "transition",
+        {
+          attrs: {
+            "enter-active-class": "animated fadeIn",
+            "leave-active-class": "animated fadeOut"
+          }
+        },
+        [
+          typeof _vm.$store.getters.validationErrors.errors !== "undefined"
+            ? _c("div", [
+                _vm.$store.getters.validationErrors.errors.length !== 0
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        typeof _vm.$store.getters.validationErrors.errors ===
+                        "object"
+                          ? _c(
+                              "ul",
+                              { staticClass: "list-group" },
+                              _vm._l(
+                                _vm.$store.getters.validationErrors.errors,
+                                function(items, index) {
+                                  return _c("li", { key: index }, [
+                                    typeof items === "object" ||
+                                    typeof items === "array"
+                                      ? _c(
+                                          "div",
+                                          _vm._l(items, function(item, index) {
+                                            return _c(
+                                              "p",
+                                              {
+                                                key: index,
+                                                staticClass:
+                                                  "mb-0 animated fadeIn"
+                                              },
+                                              [_vm._v(_vm._s(item))]
+                                            )
+                                          }),
+                                          0
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    typeof items === "string"
+                                      ? _c("div", [
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "mb-0 animated fadeIn"
+                                            },
+                                            [_vm._v(_vm._s(items))]
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                }
+                              ),
+                              0
+                            )
+                          : typeof _vm.$store.getters.validationErrors
+                              .errors === "string"
+                          ? _c("ul", { staticClass: "list-group" }, [
+                              _c("li", [
+                                _c("p", { staticClass: "mb-0" }, [
+                                  _c("i", {
+                                    staticClass:
+                                      "icon icon-hand-stop-o text-blue"
+                                  }),
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(
+                                        _vm.$store.getters.validationErrors
+                                          .errors
+                                      ) +
+                                      "\n            "
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e()
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a1dcdff0", module.exports)
+  }
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(56)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(58)
+/* template */
+var __vue_template__ = __webpack_require__(59)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51163,17 +51448,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(52);
+var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("2444164d", content, false, {});
+var update = __webpack_require__(3)("2444164d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -51189,10 +51474,10 @@ if(false) {
 }
 
 /***/ }),
-/* 52 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -51203,11 +51488,12 @@ exports.push([module.i, "\n.d-block[data-v-ba8072a4] {\n  display: block;\n}\n",
 
 
 /***/ }),
-/* 53 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -51264,7 +51550,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 54 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51288,6 +51574,7 @@ var render = function() {
         placeholder: _vm.placeholder,
         required: _vm.required
       },
+      domProps: { value: _vm.value },
       on: {
         input: function($event) {
           return _vm.$emit("input", $event.target.value)
@@ -51307,19 +51594,19 @@ if (false) {
 }
 
 /***/ }),
-/* 55 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(56)
+  __webpack_require__(61)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(58)
+var __vue_script__ = __webpack_require__(63)
 /* template */
-var __vue_template__ = __webpack_require__(59)
+var __vue_template__ = __webpack_require__(64)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51358,17 +51645,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 56 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(57);
+var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("37d5d810", content, false, {});
+var update = __webpack_require__(3)("37d5d810", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -51384,10 +51671,10 @@ if(false) {
 }
 
 /***/ }),
-/* 57 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -51398,7 +51685,7 @@ exports.push([module.i, "\n.img-thumbnail[data-v-746fdfaa] {\n  max-width: 300px
 
 
 /***/ }),
-/* 58 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51461,7 +51748,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51508,7 +51795,7 @@ if (false) {
 }
 
 /***/ }),
-/* 60 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51530,7 +51817,7 @@ var registrationPrice = {
 };
 
 /***/ }),
-/* 61 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51538,939 +51825,948 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "registration-form p-0 pb-100" }, [
-      _c(
-        "span",
-        {
-          staticClass: "addtocalendar atc-style-theme registrationPriceFloating"
-        },
-        [
-          _c(
-            "a",
-            { staticClass: "atcb-link", attrs: { tabindex: "1", id: "" } },
-            [_vm._v(_vm._s(_vm.moneySymbol) + " " + _vm._s(_vm.totalAmount))]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "form",
-        { attrs: { action: "", method: "POST", target: "_top", id: "" } },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-2" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Title")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.title,
-                        expression: "participantData.title"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "title",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "Mr." } }, [_vm._v("Mr.")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Mrs." } }, [
-                      _vm._v("Mrs.")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Ms." } }, [_vm._v("Ms.")])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "registration-form p-0 pb-100" },
+      [
+        _c("errors"),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            staticClass:
+              "addtocalendar atc-style-theme registrationPriceFloating"
+          },
+          [
             _c(
-              "div",
-              { staticClass: "col-md-10" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "Full Name",
-                    name: "name",
-                    placeholder: "Name",
-                    required: true
-                  },
-                  model: {
-                    value: _vm.participantData.name,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "name", $$v)
-                    },
-                    expression: "participantData.name"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "form-grou" }, [
-                _c("label", { staticClass: "col-md-12 ml-0 pl-0" }, [
-                  _vm._v("Upload Image")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-4 pl-0" },
-                  [
-                    _c("image-upload", {
-                      model: {
-                        value: _vm.participantData.image,
-                        callback: function($$v) {
-                          _vm.$set(_vm.participantData, "image", $$v)
-                        },
-                        expression: "participantData.image"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Year Of Birth")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.year_of_birth,
-                        expression: "participantData.year_of_birth"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "year_of_birth",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Select Year")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(140, function(n, keyIn) {
-                      return _c(
-                        "option",
-                        { key: keyIn, domProps: { value: keyIn + 1880 } },
-                        [_vm._v(_vm._s(keyIn + 1880))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Year of Admission")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.admission_year,
-                        expression: "participantData.admission_year"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "admission_year",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Select Year")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(70, function(n, keyIn) {
-                      return _c(
-                        "option",
-                        { key: keyIn, domProps: { value: keyIn + 1944 } },
-                        [_vm._v(_vm._s(keyIn + 1944))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Class of Admission")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.class,
-                        expression: "participantData.class"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "class",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Select Class")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.classes, function(item, classIn) {
-                      return _c(
-                        "option",
-                        { key: classIn, domProps: { value: item } },
-                        [_vm._v(_vm._s(item))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Group")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.group,
-                        expression: "participantData.group"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "group",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Select Group")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Science" } }, [
-                      _vm._v("Science")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Arts" } }, [
-                      _vm._v("Arts")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Commerce" } }, [
-                      _vm._v("Commerce")
-                    ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _c("input-text", {
-                  attrs: { label: "Subject", name: "subject", required: true },
-                  model: {
-                    value: _vm.participantData.subject,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "subject", $$v)
-                    },
-                    expression: "participantData.subject"
-                  }
-                })
-              ],
-              1
+              "a",
+              { staticClass: "atcb-link", attrs: { tabindex: "1", id: "" } },
+              [_vm._v(_vm._s(_vm.moneySymbol) + " " + _vm._s(_vm.totalAmount))]
             )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-md-6" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "Mobile No. (Optional) (with country code)",
-                    name: "mobile_no",
-                    placeholder: "+8801711111111",
-                    required: true,
-                    helptext:
-                      "Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
-                  },
-                  model: {
-                    value: _vm.participantData.mobile_no,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "mobile_no", $$v)
-                    },
-                    expression: "participantData.mobile_no"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-6" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "Email",
-                    name: "email",
-                    placeholder: "yourmail@mail.com",
-                    helptext:
-                      "Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
-                  },
-                  model: {
-                    value: _vm.participantData.email,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "email", $$v)
-                    },
-                    expression: "participantData.email"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          !_vm.currentStudent
-            ? _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Occupation")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.participantData.occupation,
-                            expression: "participantData.occupation"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "os0", required: "" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.participantData,
-                              "occupation",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "-1" } }, [
-                          _vm._v("Choose...")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.occupations, function(
-                          occupation,
-                          occupationIn
-                        ) {
-                          return _c(
-                            "option",
-                            {
-                              key: occupationIn,
-                              domProps: { value: occupation }
-                            },
-                            [_vm._v(_vm._s(occupation))]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-3" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Designation (Optional)",
-                        name: "designation",
-                        placeholder: "Designation"
-                      },
-                      model: {
-                        value:
-                          _vm.participantData.occupation_details.designation,
-                        callback: function($$v) {
-                          _vm.$set(
-                            _vm.participantData.occupation_details,
-                            "designation",
-                            $$v
-                          )
-                        },
-                        expression:
-                          "participantData.occupation_details.designation"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-3" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Department (Optional)",
-                        name: "department",
-                        placeholder: "department"
-                      },
-                      model: {
-                        value:
-                          _vm.participantData.occupation_details.department,
-                        callback: function($$v) {
-                          _vm.$set(
-                            _vm.participantData.occupation_details,
-                            "department",
-                            $$v
-                          )
-                        },
-                        expression:
-                          "participantData.occupation_details.department"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-md-3" },
-                  [
-                    _c("input-text", {
-                      attrs: {
-                        label: "Company Name (Optional)",
-                        name: "companty_name",
-                        placeholder: "Company Name"
-                      },
-                      model: {
-                        value:
-                          _vm.participantData.occupation_details.companty_name,
-                        callback: function($$v) {
-                          _vm.$set(
-                            _vm.participantData.occupation_details,
-                            "companty_name",
-                            $$v
-                          )
-                        },
-                        expression:
-                          "participantData.occupation_details.companty_name"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm.participantData.occupation === "Others"
-                  ? _c(
-                      "div",
-                      { staticClass: "col-md-12" },
-                      [
-                        _c("input-text", {
-                          attrs: {
-                            label: "Occupation Name",
-                            name: "occupation_name",
-                            placeholder: "Occupation Name"
-                          },
-                          model: {
-                            value:
-                              _vm.participantData.occupation_details
-                                .occupation_name,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.participantData.occupation_details,
-                                "occupation_name",
-                                $$v
-                              )
-                            },
-                            expression:
-                              "participantData.occupation_details.occupation_name"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-md-8" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "Address (where you live in as a resident)",
-                    name: "address",
-                    placeholder: "Village, Town",
-                    required: true
-                  },
-                  model: {
-                    value: _vm.participantData.address,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "address", $$v)
-                    },
-                    expression: "participantData.address"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "City",
-                    name: "city",
-                    placeholder: "City",
-                    required: true
-                  },
-                  model: {
-                    value: _vm.participantData.city,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "city", $$v)
-                    },
-                    expression: "participantData.city"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "State",
-                    name: "state",
-                    placeholder: "State",
-                    required: true
-                  },
-                  model: {
-                    value: _vm.participantData.state,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "state", $$v)
-                    },
-                    expression: "participantData.state"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Country")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.participantData.country,
-                        expression: "participantData.country"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "os0", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.participantData,
-                          "country",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Choose...")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.countries, function(country, index) {
-                      return _c(
-                        "option",
-                        { key: index, domProps: { value: country } },
-                        [_vm._v(_vm._s(country))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-4" },
-              [
-                _c("input-text", {
-                  attrs: {
-                    label: "Zip Code",
-                    name: "zip_code",
-                    placeholder: "Zip Code",
-                    required: true
-                  },
-                  model: {
-                    value: _vm.participantData.zip_code,
-                    callback: function($$v) {
-                      _vm.$set(_vm.participantData, "zip_code", $$v)
-                    },
-                    expression: "participantData.zip_code"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          !_vm.currentStudent && !_vm.registerOnly
-            ? _c(
-                "div",
-                [
-                  _c("h6", [_vm._v("Possible Accompanies")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.participantData.guests, function(item, keyIndex) {
-                    return _c(
-                      "div",
-                      {
-                        key: _vm.componentKey + keyIndex,
-                        staticClass: "row mt-15 mb-15"
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "col-md-4" },
-                          [
-                            _c("input-text", {
-                              attrs: {
-                                label: "Guest Name",
-                                name: "Guest_name",
-                                placeholder: "Guest Name",
-                                required: true
-                              },
-                              model: {
-                                value: item.name,
-                                callback: function($$v) {
-                                  _vm.$set(item, "name", $$v)
-                                },
-                                expression: "item.name"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-md-3" },
-                          [
-                            _c("input-text", {
-                              attrs: {
-                                label: "Relation",
-                                name: "relation",
-                                placeholder: "Relation",
-                                required: true
-                              },
-                              model: {
-                                value: item.relation,
-                                callback: function($$v) {
-                                  _vm.$set(item, "relation", $$v)
-                                },
-                                expression: "item.relation"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-md-2" },
-                          [
-                            _c("input-text", {
-                              attrs: {
-                                label: "Age",
-                                name: "age",
-                                placeholder: "Age",
-                                required: true
-                              },
-                              model: {
-                                value: item.age,
-                                callback: function($$v) {
-                                  _vm.$set(item, "age", $$v)
-                                },
-                                expression: "item.age"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-md-2" },
-                          [
-                            _c("image-upload", {
-                              model: {
-                                value: item.image,
-                                callback: function($$v) {
-                                  _vm.$set(item, "image", $$v)
-                                },
-                                expression: "item.image"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-1" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm bg-danger mt-30",
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.removeGuest(keyIndex)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-times" })]
-                          )
-                        ])
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Title")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
                     {
-                      staticClass: "btn btn-success btn-sm mb-25",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.addGuest($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Add Guest")]
-                  )
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.title,
+                      expression: "participantData.title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "title",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "Mr." } }, [_vm._v("Mr.")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Mrs." } }, [_vm._v("Mrs.")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Ms." } }, [_vm._v("Ms.")])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-10" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "Full Name",
+                  name: "name",
+                  placeholder: "Name",
+                  required: true
+                },
+                model: {
+                  value: _vm.participantData.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "name", $$v)
+                  },
+                  expression: "participantData.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "form-grou" }, [
+              _c("label", { staticClass: "col-md-12 ml-0 pl-0" }, [
+                _vm._v("Upload Image")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 pl-0" },
+                [
+                  _c("image-upload", {
+                    model: {
+                      value: _vm.participantData.image,
+                      callback: function($$v) {
+                        _vm.$set(_vm.participantData, "image", $$v)
+                      },
+                      expression: "participantData.image"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Year Of Birth")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.year_of_birth,
+                      expression: "participantData.year_of_birth"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "year_of_birth",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "-1" } }, [
+                    _vm._v("Select Year")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(140, function(n, keyIn) {
+                    return _c(
+                      "option",
+                      { key: keyIn, domProps: { value: keyIn + 1880 } },
+                      [_vm._v(_vm._s(keyIn + 1880))]
+                    )
+                  })
                 ],
                 2
               )
-            : _vm._e(),
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-offset-4 col-md-4" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Year of Admission")]),
+              _vm._v(" "),
               _c(
-                "div",
+                "select",
                 {
-                  staticClass: "pricing-item highlighted-plan wow zoomIn mt-20"
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.admission_year,
+                      expression: "participantData.admission_year"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "admission_year",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
                 },
                 [
-                  _c("div", { staticClass: "plan-name" }, [
-                    _vm._v("Registration Price")
+                  _c("option", { attrs: { value: "-1" } }, [
+                    _vm._v("Select Year")
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "price" }, [
-                    _c("span", { staticClass: "curr" }, [
-                      _vm._v(_vm._s(_vm.moneySymbol))
-                    ]),
-                    _vm._v(
-                      "\n              " +
-                        _vm._s(_vm.totalAmount) +
-                        "\n            "
+                  _vm._l(70, function(n, keyIn) {
+                    return _c(
+                      "option",
+                      { key: keyIn, domProps: { value: keyIn + 1944 } },
+                      [_vm._v(_vm._s(keyIn + 1944))]
                     )
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Class of Admission")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.class,
+                      expression: "participantData.class"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "class",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "-1" } }, [
+                    _vm._v("Select Class")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.classes, function(item, classIn) {
+                    return _c(
+                      "option",
+                      { key: classIn, domProps: { value: item } },
+                      [_vm._v(_vm._s(item))]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Group")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.group,
+                      expression: "participantData.group"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "group",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "-1" } }, [
+                    _vm._v("Select Group")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Science" } }, [
+                    _vm._v("Science")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Arts" } }, [_vm._v("Arts")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Commerce" } }, [
+                    _vm._v("Commerce")
                   ])
                 ]
               )
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
-        ]
-      )
-    ])
+          _c(
+            "div",
+            { staticClass: "col-md-4" },
+            [
+              _c("input-text", {
+                attrs: { label: "Subject", name: "subject", required: true },
+                model: {
+                  value: _vm.participantData.subject,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "subject", $$v)
+                  },
+                  expression: "participantData.subject"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "Mobile No. (Optional) (with country code)",
+                  name: "mobile_no",
+                  placeholder: "+8801711111111",
+                  required: true,
+                  helptext:
+                    "Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+                },
+                model: {
+                  value: _vm.participantData.mobile_no,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "mobile_no", $$v)
+                  },
+                  expression: "participantData.mobile_no"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "Email",
+                  name: "email",
+                  placeholder: "yourmail@mail.com",
+                  helptext:
+                    "Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+                },
+                model: {
+                  value: _vm.participantData.email,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "email", $$v)
+                  },
+                  expression: "participantData.email"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        !_vm.currentStudent
+          ? _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Occupation")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.participantData.occupation,
+                          expression: "participantData.occupation"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "os0", required: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.participantData,
+                            "occupation",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "-1" } }, [
+                        _vm._v("Choose...")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.occupations, function(
+                        occupation,
+                        occupationIn
+                      ) {
+                        return _c(
+                          "option",
+                          {
+                            key: occupationIn,
+                            domProps: { value: occupation }
+                          },
+                          [_vm._v(_vm._s(occupation))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-3" },
+                [
+                  _c("input-text", {
+                    attrs: {
+                      label: "Designation (Optional)",
+                      name: "designation",
+                      placeholder: "Designation"
+                    },
+                    model: {
+                      value: _vm.participantData.occupation_details.designation,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.participantData.occupation_details,
+                          "designation",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "participantData.occupation_details.designation"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-3" },
+                [
+                  _c("input-text", {
+                    attrs: {
+                      label: "Department (Optional)",
+                      name: "department",
+                      placeholder: "department"
+                    },
+                    model: {
+                      value: _vm.participantData.occupation_details.department,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.participantData.occupation_details,
+                          "department",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "participantData.occupation_details.department"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-3" },
+                [
+                  _c("input-text", {
+                    attrs: {
+                      label: "Company Name (Optional)",
+                      name: "companty_name",
+                      placeholder: "Company Name"
+                    },
+                    model: {
+                      value:
+                        _vm.participantData.occupation_details.companty_name,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.participantData.occupation_details,
+                          "companty_name",
+                          $$v
+                        )
+                      },
+                      expression:
+                        "participantData.occupation_details.companty_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.participantData.occupation === "Others"
+                ? _c(
+                    "div",
+                    { staticClass: "col-md-12" },
+                    [
+                      _c("input-text", {
+                        attrs: {
+                          label: "Occupation Name",
+                          name: "occupation_name",
+                          placeholder: "Occupation Name"
+                        },
+                        model: {
+                          value:
+                            _vm.participantData.occupation_details
+                              .occupation_name,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.participantData.occupation_details,
+                              "occupation_name",
+                              $$v
+                            )
+                          },
+                          expression:
+                            "participantData.occupation_details.occupation_name"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-8" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "Address (where you live in as a resident)",
+                  name: "address",
+                  placeholder: "Village, Town",
+                  required: true
+                },
+                model: {
+                  value: _vm.participantData.address,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "address", $$v)
+                  },
+                  expression: "participantData.address"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-4" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "City",
+                  name: "city",
+                  placeholder: "City",
+                  required: true
+                },
+                model: {
+                  value: _vm.participantData.city,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "city", $$v)
+                  },
+                  expression: "participantData.city"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-4" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "State",
+                  name: "state",
+                  placeholder: "State",
+                  required: true
+                },
+                model: {
+                  value: _vm.participantData.state,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "state", $$v)
+                  },
+                  expression: "participantData.state"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Country")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.participantData.country,
+                      expression: "participantData.country"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "os0", required: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.participantData,
+                        "country",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "-1" } }, [
+                    _vm._v("Choose...")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.countries, function(country, index) {
+                    return _c(
+                      "option",
+                      { key: index, domProps: { value: country } },
+                      [_vm._v(_vm._s(country))]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-4" },
+            [
+              _c("input-text", {
+                attrs: {
+                  label: "Zip Code",
+                  name: "zip_code",
+                  placeholder: "Zip Code",
+                  required: true
+                },
+                model: {
+                  value: _vm.participantData.zip_code,
+                  callback: function($$v) {
+                    _vm.$set(_vm.participantData, "zip_code", $$v)
+                  },
+                  expression: "participantData.zip_code"
+                }
+              })
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        !_vm.currentStudent && !_vm.registerOnly
+          ? _c(
+              "div",
+              [
+                _c("h6", [_vm._v("Possible Accompanies")]),
+                _vm._v(" "),
+                _vm._l(_vm.participantData.guests, function(item, keyIndex) {
+                  return _c(
+                    "div",
+                    {
+                      key: _vm.componentKey + keyIndex,
+                      staticClass: "row mt-15 mb-15"
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-4" },
+                        [
+                          _c("input-text", {
+                            attrs: {
+                              label: "Guest Name",
+                              name: "Guest_name",
+                              placeholder: "Guest Name",
+                              required: true,
+                              value: item.name
+                            },
+                            model: {
+                              value: item.name,
+                              callback: function($$v) {
+                                _vm.$set(item, "name", $$v)
+                              },
+                              expression: "item.name"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Relation")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.relation,
+                                  expression: "item.relation"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { name: "relation", required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    item,
+                                    "relation",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "-1" } }, [
+                                _vm._v("Choose...")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.relations, function(relation, index) {
+                                return _c(
+                                  "option",
+                                  { key: index, domProps: { value: relation } },
+                                  [_vm._v(_vm._s(relation))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-3" },
+                        [
+                          _c("input-text", {
+                            attrs: {
+                              label: "Age",
+                              name: "age",
+                              placeholder: "Age",
+                              required: true,
+                              value: item.age
+                            },
+                            model: {
+                              value: item.age,
+                              callback: function($$v) {
+                                _vm.$set(item, "age", $$v)
+                              },
+                              expression: "item.age"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm bg-danger mt-30",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.removeGuest(keyIndex)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-times" })]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-sm mb-25",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.addGuest($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Add Guest")]
+                )
+              ],
+              2
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-offset-4 col-md-4" }, [
+            _c(
+              "div",
+              { staticClass: "pricing-item highlighted-plan wow zoomIn mt-20" },
+              [
+                _c("div", { staticClass: "plan-name" }, [
+                  _vm._v("Registration Price")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "price" }, [
+                  _c("span", { staticClass: "curr" }, [
+                    _vm._v(_vm._s(_vm.moneySymbol))
+                  ]),
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.totalAmount) + "\n          "
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center top-space" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-lg",
+              attrs: { id: "reserve-btn" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [_vm._v("Reserve my Seat")]
+          )
+        ])
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center top-space" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-lg",
-          attrs: { type: "submit", id: "reserve-btn" }
-        },
-        [_vm._v("Reserve my Seat")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52481,7 +52777,7 @@ if (false) {
 }
 
 /***/ }),
-/* 62 */
+/* 67 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -25,5 +25,5 @@ class Participants extends Model
      * Attributes that should be mass-assignable.
      * @var array
      */
-    protected $fillable = ["uid", "name", "email", "mobile_no", "image", "date_of_birth", "admission_year", "class", "group", "subject", "address", "city", "state", "country", "zip_code", "occupation", "occupation_details", "current_student", "outside_of_bd", "only_register"];
+    protected $fillable = ["uid", "name", "email", "mobile_no", "image", "year_of_birth", "admission_year", "class", "group", "subject", "address", "city", "state", "country", "zip_code", "occupation", "occupation_details", "current_student", "outside_of_bd", "only_register"];
 }

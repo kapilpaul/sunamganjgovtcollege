@@ -1,314 +1,321 @@
 <template>
   <div>
     <div class="registration-form p-0 pb-100">
+      <errors></errors>
+
       <span class="addtocalendar atc-style-theme registrationPriceFloating">
         <a class="atcb-link" tabindex="1" id>{{moneySymbol}} {{ totalAmount }}</a>
       </span>
 
-      <form action method="POST" target="_top" id>
-        <div class="row">
-          <div class="col-md-2">
-            <div class="form-group">
-              <label>Title</label>
-              <select class="form-control" name="os0" required v-model="participantData.title">
-                <option value="Mr.">Mr.</option>
-                <option value="Mrs.">Mrs.</option>
-                <option value="Ms.">Ms.</option>
-              </select>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Title</label>
+            <select class="form-control" name="os0" required v-model="participantData.title">
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Ms.">Ms.</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <input-text
+            label="Full Name"
+            name="name"
+            placeholder="Name"
+            :required="true"
+            v-model="participantData.name"
+          ></input-text>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-grou">
+            <label class="col-md-12 ml-0 pl-0">Upload Image</label>
+            <div class="col-md-4 pl-0">
+              <image-upload v-model="participantData.image"></image-upload>
             </div>
           </div>
-          <div class="col-md-10">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Year Of Birth</label>
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.year_of_birth"
+            >
+              <option value="-1">Select Year</option>
+              <option
+                v-for="(n, keyIn) in 140"
+                :value="keyIn + 1880"
+                :key="keyIn"
+              >{{ keyIn + 1880 }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Year of Admission</label>
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.admission_year"
+            >
+              <option value="-1">Select Year</option>
+              <option v-for="(n, keyIn) in 70" :value="keyIn + 1944" :key="keyIn">{{ keyIn + 1944 }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Class of Admission</label>
+            <select class="form-control" name="os0" required v-model="participantData.class">
+              <option value="-1">Select Class</option>
+              <option v-for="(item, classIn) in classes" :value="item" :key="classIn">{{ item }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Group</label>
+            <select class="form-control" name="os0" required v-model="participantData.group">
+              <option value="-1">Select Group</option>
+              <option value="Science">Science</option>
+              <option value="Arts">Arts</option>
+              <option value="Commerce">Commerce</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <input-text
+            label="Subject"
+            name="subject"
+            :required="true"
+            v-model="participantData.subject"
+          ></input-text>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <input-text
+            label="Mobile No. (Optional) (with country code)"
+            name="mobile_no"
+            placeholder="+8801711111111"
+            :required="true"
+            v-model="participantData.mobile_no"
+            helptext="Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+          ></input-text>
+        </div>
+
+        <div class="col-md-6">
+          <input-text
+            label="Email"
+            name="email"
+            placeholder="yourmail@mail.com"
+            v-model="participantData.email"
+            helptext="Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+          ></input-text>
+        </div>
+      </div>
+
+      <div class="row" v-if="!currentStudent">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Occupation</label>
+            <select class="form-control" name="os0" required v-model="participantData.occupation">
+              <option value="-1">Choose...</option>
+              <option
+                v-for="(occupation, occupationIn) in occupations"
+                :value="occupation"
+                :key="occupationIn"
+              >{{ occupation }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <input-text
+            label="Designation (Optional)"
+            name="designation"
+            placeholder="Designation"
+            v-model="participantData.occupation_details.designation"
+          ></input-text>
+        </div>
+
+        <div class="col-md-3">
+          <input-text
+            label="Department (Optional)"
+            name="department"
+            placeholder="department"
+            v-model="participantData.occupation_details.department"
+          ></input-text>
+        </div>
+
+        <div class="col-md-3">
+          <input-text
+            label="Company Name (Optional)"
+            name="companty_name"
+            placeholder="Company Name"
+            v-model="participantData.occupation_details.companty_name"
+          ></input-text>
+        </div>
+
+        <div class="col-md-12" v-if="participantData.occupation === 'Others'">
+          <input-text
+            label="Occupation Name"
+            name="occupation_name"
+            placeholder="Occupation Name"
+            v-model="participantData.occupation_details.occupation_name"
+          ></input-text>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <input-text
+            label="Address (where you live in as a resident)"
+            name="address"
+            placeholder="Village, Town"
+            :required="true"
+            v-model="participantData.address"
+          ></input-text>
+        </div>
+        <div class="col-md-4">
+          <input-text
+            label="City"
+            name="city"
+            placeholder="City"
+            :required="true"
+            v-model="participantData.city"
+          ></input-text>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <input-text
+            label="State"
+            name="state"
+            placeholder="State"
+            :required="true"
+            v-model="participantData.state"
+          ></input-text>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Country</label>
+            <select class="form-control" name="os0" required v-model="participantData.country">
+              <option value="-1">Choose...</option>
+              <option
+                v-for="(country, index) in countries"
+                :value="country"
+                :key="index"
+              >{{ country }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <input-text
+            label="Zip Code"
+            name="zip_code"
+            placeholder="Zip Code"
+            :required="true"
+            v-model="participantData.zip_code"
+          ></input-text>
+        </div>
+      </div>
+
+      <div v-if="!currentStudent && !registerOnly">
+        <h6>Possible Accompanies</h6>
+        <div
+          class="row mt-15 mb-15"
+          v-for="(item, keyIndex) in participantData.guests"
+          :key="componentKey+keyIndex"
+        >
+          <div class="col-md-4">
             <input-text
-              label="Full Name"
-              name="name"
-              placeholder="Name"
+              label="Guest Name"
+              name="Guest_name"
+              placeholder="Guest Name"
               :required="true"
-              v-model="participantData.name"
+              v-model="item.name"
+              :value="item.name"
             ></input-text>
           </div>
-
-          <div class="col-md-12">
-            <div class="form-grou">
-              <label class="col-md-12 ml-0 pl-0">Upload Image</label>
-              <div class="col-md-4 pl-0">
-                <image-upload v-model="participantData.image"></image-upload>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Year Of Birth</label>
-              <select
-                class="form-control"
-                name="os0"
-                required
-                v-model="participantData.year_of_birth"
-              >
-                <option value="-1">Select Year</option>
-                <option
-                  v-for="(n, keyIn) in 140"
-                  :value="keyIn + 1880"
-                  :key="keyIn"
-                >{{ keyIn + 1880 }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Year of Admission</label>
-              <select
-                class="form-control"
-                name="os0"
-                required
-                v-model="participantData.admission_year"
-              >
-                <option value="-1">Select Year</option>
-                <option
-                  v-for="(n, keyIn) in 70"
-                  :value="keyIn + 1944"
-                  :key="keyIn"
-                >{{ keyIn + 1944 }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>Class of Admission</label>
-              <select class="form-control" name="os0" required v-model="participantData.class">
-                <option value="-1">Select Class</option>
-                <option v-for="(item, classIn) in classes" :value="item" :key="classIn">{{ item }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Group</label>
-              <select class="form-control" name="os0" required v-model="participantData.group">
-                <option value="-1">Select Group</option>
-                <option value="Science">Science</option>
-                <option value="Arts">Arts</option>
-                <option value="Commerce">Commerce</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <input-text
-              label="Subject"
-              name="subject"
-              :required="true"
-              v-model="participantData.subject"
-            ></input-text>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <input-text
-              label="Mobile No. (Optional) (with country code)"
-              name="mobile_no"
-              placeholder="+8801711111111"
-              :required="true"
-              v-model="participantData.mobile_no"
-              helptext="Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
-            ></input-text>
-          </div>
-
-          <div class="col-md-6">
-            <input-text
-              label="Email"
-              name="email"
-              placeholder="yourmail@mail.com"
-              v-model="participantData.email"
-              helptext="Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
-            ></input-text>
-          </div>
-        </div>
-
-        <div class="row" v-if="!currentStudent">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label>Occupation</label>
-              <select class="form-control" name="os0" required v-model="participantData.occupation">
+              <label>Relation</label>
+              <select class="form-control" name="relation" required v-model="item.relation">
                 <option value="-1">Choose...</option>
                 <option
-                  v-for="(occupation, occupationIn) in occupations"
-                  :value="occupation"
-                  :key="occupationIn"
-                >{{ occupation }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <input-text
-              label="Designation (Optional)"
-              name="designation"
-              placeholder="Designation"
-              v-model="participantData.occupation_details.designation"
-            ></input-text>
-          </div>
-
-          <div class="col-md-3">
-            <input-text
-              label="Department (Optional)"
-              name="department"
-              placeholder="department"
-              v-model="participantData.occupation_details.department"
-            ></input-text>
-          </div>
-
-          <div class="col-md-3">
-            <input-text
-              label="Company Name (Optional)"
-              name="companty_name"
-              placeholder="Company Name"
-              v-model="participantData.occupation_details.companty_name"
-            ></input-text>
-          </div>
-
-          <div class="col-md-12" v-if="participantData.occupation === 'Others'">
-            <input-text
-              label="Occupation Name"
-              name="occupation_name"
-              placeholder="Occupation Name"
-              v-model="participantData.occupation_details.occupation_name"
-            ></input-text>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-8">
-            <input-text
-              label="Address (where you live in as a resident)"
-              name="address"
-              placeholder="Village, Town"
-              :required="true"
-              v-model="participantData.address"
-            ></input-text>
-          </div>
-          <div class="col-md-4">
-            <input-text
-              label="City"
-              name="city"
-              placeholder="City"
-              :required="true"
-              v-model="participantData.city"
-            ></input-text>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <input-text
-              label="State"
-              name="state"
-              placeholder="State"
-              :required="true"
-              v-model="participantData.state"
-            ></input-text>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Country</label>
-              <select class="form-control" name="os0" required v-model="participantData.country">
-                <option value="-1">Choose...</option>
-                <option
-                  v-for="(country, index) in countries"
-                  :value="country"
+                  v-for="(relation, index) in relations"
+                  :value="relation"
                   :key="index"
-                >{{ country }}</option>
+                >{{ relation }}</option>
               </select>
             </div>
           </div>
-
-          <div class="col-md-4">
+          <div class="col-md-3">
             <input-text
-              label="Zip Code"
-              name="zip_code"
-              placeholder="Zip Code"
+              label="Age"
+              name="age"
+              placeholder="Age"
               :required="true"
-              v-model="participantData.zip_code"
+              :value="item.age"
+              v-model="item.age"
             ></input-text>
           </div>
-        </div>
-
-        <div v-if="!currentStudent && !registerOnly">
-          <h6>Possible Accompanies</h6>
-          <div
-            class="row mt-15 mb-15"
-            v-for="(item, keyIndex) in participantData.guests"
-            :key="componentKey+keyIndex"
-          >
-            <div class="col-md-4">
-              <input-text
-                label="Guest Name"
-                name="Guest_name"
-                placeholder="Guest Name"
-                :required="true"
-                v-model="item.name"
-              ></input-text>
-            </div>
-            <div class="col-md-4">
-              <input-text
-                label="Relation"
-                name="relation"
-                placeholder="Relation"
-                :required="true"
-                v-model="item.relation"
-              ></input-text>
-            </div>
-            <div class="col-md-3">
-              <input-text
-                label="Age"
-                name="age"
-                placeholder="Age"
-                :required="true"
-                v-model="item.age"
-              ></input-text>
-            </div>
-            <!-- <div class="col-md-2">
+          <!-- <div class="col-md-2">
               <image-upload v-model="item.image"></image-upload>
-            </div>-->
-            <div class="col-md-1">
-              <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>
-          </div>
-
-          <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">Add Guest</button>
-        </div>
-
-        <div class="row">
-          <div class="col-md-offset-4 col-md-4">
-            <div class="pricing-item highlighted-plan wow zoomIn mt-20">
-              <div class="plan-name">Registration Price</div>
-              <div class="price">
-                <span class="curr">{{ moneySymbol }}</span>
-                {{ totalAmount }}
-              </div>
-            </div>
+          </div>-->
+          <div class="col-md-1">
+            <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
+              <i class="fa fa-times"></i>
+            </button>
           </div>
         </div>
 
-        <div class="text-center top-space">
-          <button type="submit" id="reserve-btn" class="btn btn-success btn-lg">Reserve my Seat</button>
+        <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">Add Guest</button>
+      </div>
+
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <div class="pricing-item highlighted-plan wow zoomIn mt-20">
+            <div class="plan-name">Registration Price</div>
+            <div class="price">
+              <span class="curr">{{ moneySymbol }}</span>
+              {{ totalAmount }}
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <div class="text-center top-space">
+        <button
+          id="reserve-btn"
+          class="btn btn-success btn-lg"
+          @click.prevent="submit"
+        >Reserve my Seat</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import errors from "../common/errors";
 import inputText from "../common/form/input-text";
 import imageUpload from "../common/upload/image";
 import { countries, registrationPrice } from "../../Constants";
@@ -332,6 +339,7 @@ export default {
       participantData: {
         title: "Mr.",
         name: "",
+        image: "",
         year_of_birth: -1,
         admission_year: -1,
         class: -1,
@@ -351,14 +359,7 @@ export default {
           company_name: "",
           occupation_name: ""
         },
-        guests: [
-          // {
-          //   name: "",
-          //   relation: "",
-          //   age: "",
-          //   image: ""
-          // }
-        ]
+        guests: []
       },
       countries: countries,
       classes: [
@@ -380,6 +381,17 @@ export default {
         "Non-Resident",
         "Others"
       ],
+      relations: [
+        "Husband",
+        "Wife",
+        "Son",
+        "Daughter",
+        "Relative",
+        "Personal Staff",
+        "Driver",
+        "Maids",
+        "Others"
+      ],
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
@@ -388,7 +400,8 @@ export default {
   },
   components: {
     inputText,
-    imageUpload
+    imageUpload,
+    errors
   },
   mounted() {
     if (this.immigrantStudent) {
@@ -429,6 +442,32 @@ export default {
     removeGuest(index) {
       this.participantData.guests.splice(index, 1);
       this.componentKey += index + 1;
+    },
+    submit() {
+      this.$store.dispatch("setValidationErrors", "");
+
+      let data = this.participantData;
+
+      if (this.currentStudent) {
+        data.current_student = this.currentStudent;
+      }
+
+      if (this.registerOnly) {
+        data.only_register = this.registerOnly;
+      }
+
+      if (this.immigrantStudent) {
+        data.outside_of_bd = true;
+      }
+
+      axios
+        .post("register/store", data)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
     }
   }
 };

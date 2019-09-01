@@ -11,7 +11,7 @@
  */
 Route::group(['namespace' => 'Participant'], function () {
     if (request()->is('api/*')) {
-        Route::get('register/store', 'ParticipantsController@create')->name('api.participant.store');
+        Route::post('register/store', 'ParticipantsController@store')->name('api.participant.store');
     } else {
         Route::get('register/{studentStatus}', 'ParticipantsController@create')->name('participant.create');
     }
