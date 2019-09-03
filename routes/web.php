@@ -19,7 +19,20 @@ Route::middleware(['installer', 'visitors'])->group(function () {
 
 
 Route::middleware(['installer', 'authcheck'])->group(function () {
-    Route::get('/', function() {})->name('home');
+    /*
+    *  Routes
+    */
+    Route::group(['namespace' => 'Admin'], function () {
+        Route::get('home', 'DashboardController@index')->name('admin.home');
+    });
+
+    /*
+    *  Participant Routes
+    */
+    Route::group(['namespace' => 'Participant', 'prefix' => 'participants'], function () {
+        Route::post('/filter', 'ParticipantsController@filter')->name('participant.filter');
+        Route::get('/{student_status?}', 'ParticipantsController@index')->name('participant.index');
+    });
 });
 
 

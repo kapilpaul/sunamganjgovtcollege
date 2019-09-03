@@ -6,7 +6,8 @@
         <div class="sidebar-content">
             <!-- Brand -->
             <a href="#" class="sidebar-brand">
-                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Sunamganj College</strong></span>
+                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong
+                            class="fz-15">Sunamganj College</strong></span>
             </a>
             <!-- END Brand -->
 
@@ -20,8 +21,8 @@
                 </div>
 
                 <?php
-                    $user = Sentinel::getUser();
-                    $username = $user->first_name . ' ' . $user->last_name;
+                $user = Sentinel::getUser();
+                $username = $user->first_name . ' ' . $user->last_name;
                 ?>
 
                 <div class="sidebar-user-name">{{ $username }}</div>
@@ -46,11 +47,28 @@
                                 class="sidebar-nav-mini-hide">Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="#" class="">
-                        <i class="gi gi-stopwatch sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Category</span>
+                    <a href="#" class="sidebar-nav-menu">
+                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                        <i class="gi gi-shopping_cart sidebar-nav-icon"></i>
+                        <span class="sidebar-nav-mini-hide">Students</span>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('participant.index') }}">All</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('participant.index', 'former-students') }}">Former Students</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('participant.index', 'nrb-former-students') }}">Non Returning Bangladeshi Former Students</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('participant.index', 'current-students') }}">Current Students</a>
+                        </li>
+
+                    </ul>
                 </li>
+
             </ul>
             <!-- END Sidebar Navigation -->
         </div>

@@ -11,17 +11,34 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Validator;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Illuminate\Database\QueryException;
+use PDOException;
+use Illuminate\Session\TokenMismatchException;
 
 class ParticipantsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param string $studentStatus
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($studentStatus = "all")
     {
-        //
+        $perPage = 100;
+
+        if ($studentStatus == 'current-students') {
+            $participants = Participants::where('current_student', 1)->where('outside_of_bd', 0)->paginate($perPage);
+        } else if ($studentStatus == 'nrb-former-students') {
+            $participants = Participants::where('current_student', 0)->where('outside_of_bd', 1)->paginate($perPage);
+        } else if ($studentStatus == 'former-students') {
+            $participants = Participants::where('current_student', 0)->where('outside_of_bd', 0)->paginate($perPage);
+        } else {
+            $participants = Participants::paginate($perPage);
+        }
+
+        return view('admin.participants.index', compact('participants'));
     }
 
     /**
@@ -35,8 +52,11 @@ class ParticipantsController extends Controller
         $currentStudent = $immigrantStudent = $registerOnly = "false";
         if ($studentStatus == 'current-student') {
             $currentStudent = "true";
-        } else if ($studentStatus == 'immigrant-former-student') {
+        } else if ($studentStatus == 'nrb-former-student') {
             $immigrantStudent = "true";
+        } else if ($studentStatus == 'former-student') {
+        } else {
+            abort(404);
         }
 
         if (Input::get('registeronly')) {
@@ -61,9 +81,9 @@ class ParticipantsController extends Controller
         try {
             $input = $request->all();
             $input['uid'] = Str::uuid();
-            $imagename = $this->storeImage($request->image, Str::slug($input['name']));
+            $imagename = $this->storeImage($request->image, $input['uid']);
 
-            $input['image'] = Storage::url('uploads/' . $imagename);
+            $input['image'] = Storage::url('public/images/' . $imagename);
             $input['occupation_details'] = json_encode($request->occupation_details);
 
             if ($participant = Participants::create($input)) {
@@ -76,9 +96,8 @@ class ParticipantsController extends Controller
                 return response()->json(['participant' => $participant], 200);
             }
 
-
+            return response()->json(['errors' => "Something went wrong!"], 500);
         } catch (\Exception $e) {
-            return response()->json(['errors' => $e->getMessage()], 500);
             return response()->json(['errors' => "Server Error!"], 500);
         }
     }
@@ -102,7 +121,7 @@ class ParticipantsController extends Controller
                     $data = substr($base64_image, strpos($base64_image, ',') + 1);
 
                     $data = base64_decode($data);
-                    $store = Storage::disk('local')->put("uploads/" . $name, $data);
+                    $store = Storage::disk('local')->put("public/images/" . $name, $data);
                     return $name;
                 }
             }
@@ -195,6 +214,56 @@ class ParticipantsController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function filter(Request $request)
+    {
+        $this->validate($request, [
+            'register_type' => 'required',
+            'student_type' => 'required',
+            'payment_status' => 'required',
+        ]);
+
+        try {
+            $perPage = 100;
+            $registerType = $currentStudent = $immigrantStudent = $paymentStatus = 0;
+
+            if ($request->register_type == 'only_register') {
+                $registerType = 1;
+            }
+
+            if ($request->student_type == 'current-student') {
+                $currentStudent = 1;
+            } elseif ($request->student_type == 'nrb-former-student') {
+                $immigrantStudent = 1;
+            }
+
+            if ($request->payment_status == 'paid') {
+                $paymentStatus = 1;
+            }
+
+            $participants = Participants::where('current_student', $currentStudent)
+                                ->where('outside_of_bd', $immigrantStudent)
+                                ->where('only_register', $registerType)
+                                ->where('paid', $paymentStatus)
+                                ->paginate($perPage);
+
+            return view('admin.participants.index', compact('participants', 'request'));
+
+        } catch (PDOException $e) {
+            return redirect()->back()->with(['error' => "PDOException Error!"]);
+        } catch (QueryException $e) {
+            return redirect()->back()->with(['error' => "QueryException Error!"]);
+        } catch (TokenMismatchException $e) {
+            return redirect()->route('participant.index');
+        } catch (MethodNotAllowedHttpException $e) {
+            return redirect()->route('participant.index');
         }
     }
 }

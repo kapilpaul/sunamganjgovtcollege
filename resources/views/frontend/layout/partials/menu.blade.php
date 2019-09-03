@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li><a href="{{ route('participant.create', 'former-student') }}">Former Student</a></li>
-                        <li><a href="{{ route('participant.create', 'immigrant-former-student') }}">Non Resident Bangladeshi Former Student</a></li>
+                        <li><a href="{{ route('participant.create', 'nrb-former-student') }}">Non Resident Bangladeshi Former Student</a></li>
                     </ul>
                 </li>
 
@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li><a href="{{ route('participant.create', 'former-student') }}?registeronly=true">Former Student</a></li>
-                        <li><a href="{{ route('participant.create', 'immigrant-former-student') }}?registeronly=true">Non Resident Bangladeshi Former Student</a></li>
+                        <li><a href="{{ route('participant.create', 'nrb-former-student') }}?registeronly=true">Non Resident Bangladeshi Former Student</a></li>
                     </ul>
                 </li>
             </ul>

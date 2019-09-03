@@ -51104,7 +51104,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addGuest: function addGuest() {
       this.participantData.guests.push({
         name: "",
-        relation: "",
+        relation: "-1",
         age: ""
       });
     },

@@ -435,7 +435,7 @@ export default {
     addGuest() {
       this.participantData.guests.push({
         name: "",
-        relation: "",
+        relation: "-1",
         age: ""
       });
     },

@@ -75,7 +75,7 @@ class LoginController extends Controller
                     ]);
 
                     $token = json_decode((string)$response->getBody());
-                    return redirect()->route('home')->with(
+                    return redirect()->route('admin.home')->with(
                         [
                             'access_token' => $token->access_token,
                             'expiration' => $token->expires_in
