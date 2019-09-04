@@ -14637,7 +14637,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = Object({"NODE_ENV":"development"}).MIX_APP_URL;
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
     return response;
@@ -50642,7 +50642,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n", ""]);
+exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n.registration-form[data-v-cf0ab8f8] {\n  position: relative;\n}\n.loader_area[data-v-cf0ab8f8] {\n  position: absolute;\n  z-index: 99;\n  width: 100%;\n  height: 100%;\n  background: #ffffffc2;\n  left: 0;\n  top: 0;\n}\n.loader[data-v-cf0ab8f8] {\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n.loader i.fa.fa-spin[data-v-cf0ab8f8] {\n  color: #000000de;\n}\n", ""]);
 
 // exports
 
@@ -50695,6 +50695,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__common_upload_image__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Constants__ = __webpack_require__(65);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51065,7 +51072,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "$" : "৳"
+      moneySymbol: this.immigrantStudent ? "$" : "৳",
+      loading: false
     };
   },
 
@@ -51113,6 +51121,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.componentKey += index + 1;
     },
     submit: function submit() {
+      var _this = this;
+
+      this.loading = true;
       this.$store.dispatch("setValidationErrors", "");
 
       var data = this.participantData;
@@ -51131,8 +51142,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("register/store", data).then(function (response) {
         console.log(response);
+        _this.loading = false;
       }).catch(function (error) {
         console.log(error.data);
+        _this.loading = false;
       });
     }
   }
@@ -51847,6 +51860,10 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
+          _vm.loading
+            ? _c("div", { staticClass: "loader_area text-center" }, [_vm._m(0)])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "col-md-2" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("label", [_vm._v("Title")]),
@@ -52766,7 +52783,18 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loader" }, [
+      _c("i", { staticClass: "fa fa-spinner fa-spin fa-5x fa-fw" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

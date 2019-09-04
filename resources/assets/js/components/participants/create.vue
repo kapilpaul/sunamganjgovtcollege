@@ -8,6 +8,13 @@
       </span>
 
       <div class="row">
+        <div class="loader_area text-center" v-if="loading">
+          <div class="loader">
+            <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
         <div class="col-md-2">
           <div class="form-group">
             <label>Title</label>
@@ -395,7 +402,8 @@ export default {
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "$" : "৳"
+      moneySymbol: this.immigrantStudent ? "$" : "৳",
+      loading: false
     };
   },
   components: {
@@ -444,6 +452,7 @@ export default {
       this.componentKey += index + 1;
     },
     submit() {
+      this.loading = true;
       this.$store.dispatch("setValidationErrors", "");
 
       let data = this.participantData;
@@ -464,9 +473,11 @@ export default {
         .post("register/store", data)
         .then(response => {
           console.log(response);
+          this.loading = false;
         })
         .catch(error => {
           console.log(error.data);
+          this.loading = false;
         });
     }
   }
@@ -490,5 +501,25 @@ export default {
 .registrationPriceFloating a {
   font-size: 30px;
   padding: 15px 20px;
+}
+.registration-form {
+  position: relative;
+}
+.loader_area {
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: #ffffffc2;
+  left: 0;
+  top: 0;
+}
+.loader {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.loader i.fa.fa-spin {
+  color: #000000de;
 }
 </style>
