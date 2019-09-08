@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Participant;
 
 use App\Models\Participant\Guest;
 use App\Models\Participant\Participants;
+use Milon\Barcode\DNS1D;
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -138,7 +140,9 @@ class ParticipantsController extends Controller
      */
     public function show($id)
     {
-        //
+        $participant = Participants::where('uid', "09673b58-1bf4-4975-8703-b3303c7787aa")->first();
+        return $pdf = PDF::loadView('pdf.participant', compact('participant'))->stream();
+        return $pdf->download('participant.pdf');
     }
 
     /**
