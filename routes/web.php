@@ -12,13 +12,13 @@
 */
 
 
-Route::middleware(['installer', 'visitors'])->group(function () {
+Route::middleware(['visitors'])->group(function () {
     Route::prefix('')->group(base_path('routes/modules/auth.php'));
 });
 
 
 
-Route::middleware(['installer', 'authcheck'])->group(function () {
+Route::middleware(['authcheck'])->group(function () {
     /*
     *  Routes
     */
