@@ -6,32 +6,119 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
 
     <style>
-        body{
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        body, h1, h2, h3, h4, h5, h6 {
             font-family: 'Open Sans';
             font-weight: 400;
         }
-        .fix{
+
+        .fix {
             overflow: hidden;
         }
+
+        .float-left {
+            float: left;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .header_area {
+            width: 100%;
+        }
+
+        .header_left, .header_right {
+            display: inline-block;
+            padding-top: 10px;
+        }
+
+        .header_left {
+            width: 79%;
+        }
+
+        .header_right {
+            width: 20%;
+        }
+        .full-width {
+            width: 100%;
+        }
+
+        .img-fluid{
+            width: 1200%;
+            height: auto;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .mt-0, p{
+            margin-top: 0;
+        }
+        .mb-0, p{
+            margin-bottom: 0;
+        }
+        /*table, th, td {*/
+            /*border: 1px solid black;*/
+        /*}*/
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="header_title fix">
-                <h4 style="float: left;">{{ $participant->name }}</h4>
-                <img style="float: right;width: 30%" src="{{ public_path($participant->image) }}" alt="">
-                <hr>
+<table>
+    <tr>
+        <td valign="top" style="width: 450px">
+            <table>
+                <tr>
+                    <td>
+                        <h2 class="mt-0" style="padding-top: 0;">Kapil Paul</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Lorem ipsum dolor</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Lorem ipsum dolor</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Lorem ipsum dolor</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Lorem ipsum dolor</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" style="width: 200px">
+            <div class="full-width text-center">
+                <img class="img-fluid" src="https://www.perlara.com/wp-content/uploads/Press-release-300x300px-v1-300x300.jpg" alt="">
             </div>
-            <div class="col-md-6 fix">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid architecto corporis debitis distinctio dolores harum, magnam necessitatibus nisi, numquam possimus, quidem tempora. Alias aliquam, asperiores autem dolore ea excepturi unde?</p>
-            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td valign="top" style="width: 450px">
 
-            <div class="fix">
-                <p>{!! html_entity_decode(DNS1D::getBarcodeHTML(md5($participant->uid), "C39+", 1, 60)) !!}
-                </p>
+        </td>
+        <td valign="top" style="width: 200px">
+            <div class="full-width text-center">
+                {!! DNS1D::getBarcodeHTML("111111111111", "C39+", 1, 50) !!}
+                <p class="mt-0">{{ $participantBarCodeId }}</p>
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

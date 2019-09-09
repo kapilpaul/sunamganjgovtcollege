@@ -140,8 +140,18 @@ class ParticipantsController extends Controller
      */
     public function show($id)
     {
-        $participant = Participants::where('uid', "09673b58-1bf4-4975-8703-b3303c7787aa")->first();
-        return $pdf = PDF::loadView('pdf.participant', compact('participant'))->stream();
+//        $participant = Participants::where('uid', "09673b58-1bf4-4975-8703-b3303c7787aa")->first();
+        $participantBarCodeId = Str::limit("09673b58-1bf4-4975-8703-b3303c7787aa", 13, '');
+        $participant = [];
+        PDF::setOptions([
+            'debugCss' => true,
+            'debugLayout' => true,
+            'debugLayoutLines' => true,
+            'debugLayoutBlocks' => true,
+            'debugLayoutInline' => true,
+            'debugLayoutPaddingBox' => true,
+        ]);
+        return $pdf = PDF::loadView('pdf.participant', compact('participant', 'participantBarCodeId'))->stream();
         return $pdf->download('participant.pdf');
     }
 
