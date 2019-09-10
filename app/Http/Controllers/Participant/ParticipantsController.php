@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Participant;
 
 use App\Models\Participant\Guest;
 use App\Models\Participant\Participants;
-use Milon\Barcode\DNS1D;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -83,24 +82,38 @@ class ParticipantsController extends Controller
         try {
             $input = $request->all();
             $input['uid'] = Str::uuid();
+            $input['alias_id'] = Str::random(12);
             $imagename = $this->storeImage($request->image, $input['uid']);
 
             $input['image'] = Storage::url('public/images/' . $imagename);
             $input['occupation_details'] = json_encode($request->occupation_details);
 
             if ($participant = Participants::create($input)) {
-                if (count($request->guests)) {
-                    foreach ($request->guests as $guest) {
-                        $guest['participant_id'] = $participant->id;
-                        Guest::create($guest);
-                    }
-                }
+                $this->addGuest($request->guests, $participant->id);
                 return response()->json(['participant' => $participant], 200);
             }
 
             return response()->json(['errors' => "Something went wrong!"], 500);
         } catch (\Exception $e) {
             return response()->json(['errors' => "Server Error!"], 500);
+        }
+    }
+
+    /**
+     * @param $guests
+     * @param $participant_id
+     */
+    public function addGuest($guests, $participant_id)
+    {
+        if (count($guests)) {
+            foreach ($guests as $guest) {
+                $guest['alias_id'] = Str::random(12);
+                $guest['participant_id'] = $participant_id;
+                $guestImageName = $this->storeImage($guest->image, $guest['alias_id']);
+                $guest['image'] = Storage::url('public/images/' . $guestImageName);
+
+                Guest::create($guest);
+            }
         }
     }
 
@@ -140,9 +153,8 @@ class ParticipantsController extends Controller
      */
     public function show($id)
     {
-//        $participant = Participants::where('uid', "09673b58-1bf4-4975-8703-b3303c7787aa")->first();
-        $participantBarCodeId = Str::limit("09673b58-1bf4-4975-8703-b3303c7787aa", 13, '');
-        $participant = [];
+        $participant = Participants::where('uid', "c3c24444-cd8c-4602-958c-3f2ef26b6b17")->with('guests')->first();
+
         PDF::setOptions([
             'debugCss' => true,
             'debugLayout' => true,
@@ -151,7 +163,7 @@ class ParticipantsController extends Controller
             'debugLayoutInline' => true,
             'debugLayoutPaddingBox' => true,
         ]);
-        return $pdf = PDF::loadView('pdf.participant', compact('participant', 'participantBarCodeId'))->stream();
+        return $pdf = PDF::loadView('pdf.participant.ticket', compact('participant'))->stream();
         return $pdf->download('participant.pdf');
     }
 
@@ -263,10 +275,10 @@ class ParticipantsController extends Controller
             }
 
             $participants = Participants::where('current_student', $currentStudent)
-                                ->where('outside_of_bd', $immigrantStudent)
-                                ->where('only_register', $registerType)
-                                ->where('paid', $paymentStatus)
-                                ->paginate($perPage);
+                ->where('outside_of_bd', $immigrantStudent)
+                ->where('only_register', $registerType)
+                ->where('paid', $paymentStatus)
+                ->paginate($perPage);
 
             return view('admin.participants.index', compact('participants', 'request'));
 

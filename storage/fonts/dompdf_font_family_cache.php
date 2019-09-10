@@ -79,5 +79,9 @@
   ),
   'open sans' => array(
     'normal' => $fontDir . '/771fb82d4990c29fe5ca012c48dba770',
+    'italic' => $fontDir . '/411872681a317b0ccb406742d515a314',
+  ),
+  'montserrat' => array(
+    'normal' => $fontDir . '/99765fdb334a0a22a804b94acf422542',
   ),
 ) ?>

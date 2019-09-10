@@ -244,7 +244,7 @@
         </div>
       </div>
 
-      <div v-if="!currentStudent && !registerOnly">
+      <div v-if="!registerOnly">
         <h6>Possible Accompanies</h6>
         <div
           class="row mt-15 mb-15"
@@ -261,7 +261,7 @@
               :value="item.name"
             ></input-text>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-2">
             <div class="form-group">
               <label>Relation</label>
               <select class="form-control" name="relation" required v-model="item.relation">
@@ -274,7 +274,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <input-text
               label="Age"
               name="age"
@@ -284,9 +284,9 @@
               v-model="item.age"
             ></input-text>
           </div>
-          <!-- <div class="col-md-2">
-              <image-upload v-model="item.image"></image-upload>
-          </div>-->
+          <div class="col-md-2">
+            <image-upload v-model="item.image"></image-upload>
+          </div>
           <div class="col-md-1">
             <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
               <i class="fa fa-times"></i>
@@ -421,14 +421,20 @@ export default {
     }
 
     if (this.currentStudent) {
-      this.selfRegPrice = registrationPrice.current_student;
-      this.guestRegPrice = 0;
+      this.selfRegPrice = registrationPrice.current_student.self;
+      this.guestRegPrice = registrationPrice.current_student.guest;
     }
 
     if (this.registerOnly) {
-      this.selfRegPrice = registrationPrice.only_registration;
       this.guestRegPrice = 0;
-      this.moneySymbol = "৳";
+
+      if (this.immigrantStudent) {
+        this.selfRegPrice = registrationPrice.nrb_only_registration;
+        this.moneySymbol = "$";
+      } else {
+        this.selfRegPrice = registrationPrice.only_registration;
+        this.moneySymbol = "৳";
+      }
     }
   },
   computed: {
@@ -444,7 +450,8 @@ export default {
       this.participantData.guests.push({
         name: "",
         relation: "-1",
-        age: ""
+        age: "",
+        image: ""
       });
     },
     removeGuest(index) {

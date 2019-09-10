@@ -251,8 +251,8 @@ export const countries = [
 ];
 
 export const registrationPrice = {
-    current_student: 300,
     only_registration: 300,
+    nrb_only_registration: 5,
     former_student_in_bd: {
         self: 1000,
         guest: 500,
@@ -260,5 +260,9 @@ export const registrationPrice = {
     immigrant_former_student: {
         self: 100,
         guest: 50,
+    },
+    current_student: {
+        self: 300,
+        guest: 300,
     },
 }

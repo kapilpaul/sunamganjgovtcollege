@@ -25,5 +25,5 @@ class Guest extends Model
     * Attributes that should be mass-assignable.
     * @var array
     */
-    protected $fillable = ["name", "age", "relation", "other", "participant_id"];
+    protected $fillable = ["alias_id", "name", "image", "age", "relation", "other", "participant_id"];
 }
