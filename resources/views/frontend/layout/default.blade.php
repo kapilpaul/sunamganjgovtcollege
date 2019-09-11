@@ -2,7 +2,11 @@
 
 @include('frontend.layout.partials.menu')
 
-@include('frontend.layout.partials.header_top')
+@if(isset($home))
+    @include('frontend.layout.partials.home_header_top')
+@else
+    @include('frontend.layout.partials.header_top')
+@endif
 
 <div id="sunamganj-college">
     @yield('main_content')

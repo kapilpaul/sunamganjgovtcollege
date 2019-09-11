@@ -1,9 +1,9 @@
-<header id="top" class="header">
+<header id="top" class="header parallax-bg">
     <div class="container">
 
         <div class="header_top-bg">
             <div class="logo">
-                <a href="#"><img src="{{ asset('assets/website/images/event-logo.png') }}" alt="event-logo"></a>
+                <a href="#"><img src="images/event-logo.png" alt="event-logo"></a>
             </div>
         </div>
 
