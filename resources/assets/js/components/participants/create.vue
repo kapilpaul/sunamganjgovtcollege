@@ -36,9 +36,14 @@
         </div>
 
         <div class="col-md-12">
-          <div class="form-grou">
+          <div class="form-group">
             <label class="col-md-12 ml-0 pl-0">Upload Image</label>
-            <div class="col-md-4 pl-0">
+            <small class="col-md-12 ml-0 pl-0 text-muted d-block mb-10">
+              Read the photograph instructions
+              <a target="_blank" :href="imageRulesUrl">here</a>
+            </small>
+
+            <div class="col-md-12 pl-0">
               <image-upload v-model="participantData.image"></image-upload>
             </div>
           </div>
@@ -326,6 +331,7 @@ import errors from "../common/errors";
 import inputText from "../common/form/input-text";
 import imageUpload from "../common/upload/image";
 import { countries, registrationPrice } from "../../Constants";
+
 export default {
   props: {
     currentStudent: {
@@ -403,7 +409,8 @@ export default {
       selfRegPrice: 0,
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
-      loading: false
+      loading: false,
+      imageRulesUrl: process.env.MIX_APP_ROOT + "/registration/photograph/rules"
     };
   },
   components: {

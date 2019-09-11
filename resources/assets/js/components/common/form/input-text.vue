@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { ValidationProvider, extend } from "vee-validate";
+
 export default {
   props: {
     label: {
@@ -51,6 +53,9 @@ export default {
     return {
       inputData: ""
     };
+  },
+  components: {
+    ValidationProvider
   }
 };
 </script>

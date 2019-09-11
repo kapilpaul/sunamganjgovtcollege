@@ -11,7 +11,9 @@
       @click="selectImage"
     />
     <p class="mt-5" v-if="image_upload_error">
-      <span class="image-upload-error text-danger">Image dimension should be 300x300</span>
+      <span
+        class="image-upload-error text-danger fz-15"
+      >The minimum dimensions for your photo are 600 pixels x 600 pixels (height x width). The maximum dimensions are 1200 pixels x 1200 pixels (height x width).</span>
     </p>
   </div>
 </template>
@@ -38,8 +40,10 @@ export default {
           image.src = e.target.result;
           image.onload = uploadedImage => {
             if (
-              uploadedImage.target.width === 300 &&
-              uploadedImage.target.height === 300
+              uploadedImage.target.width >= 600 &&
+              uploadedImage.target.width <= 1200 &&
+              uploadedImage.target.height >= 600 &&
+              uploadedImage.target.height <= 1200
             ) {
               this.image = e.target.result; //.("src", e.target.result);
               this.image_upload_error = false;
