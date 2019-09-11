@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { ValidationProvider, extend } from "vee-validate";
 
 export default {
   props: {
@@ -55,7 +54,6 @@ export default {
     };
   },
   components: {
-    ValidationProvider
   }
 };
 </script>
