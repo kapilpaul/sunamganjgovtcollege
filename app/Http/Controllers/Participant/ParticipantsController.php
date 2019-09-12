@@ -45,10 +45,10 @@ class ParticipantsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param bool $studentStatus
+     * @param string $studentStatus
      * @return \Illuminate\Http\Response
      */
-    public function create($studentStatus = false)
+    public function create($studentStatus = "former-student")
     {
         $currentStudent = $immigrantStudent = $registerOnly = "false";
         if ($studentStatus == 'current-student') {
