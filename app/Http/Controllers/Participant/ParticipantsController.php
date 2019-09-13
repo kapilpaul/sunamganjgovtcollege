@@ -151,20 +151,24 @@ class ParticipantsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uid)
     {
-        $participant = Participants::where('uid', "c3c24444-cd8c-4602-958c-3f2ef26b6b17")->with('guests')->first();
+        $participant = Participants::where('uid', $uid)->with('guests')->first();
+//        return $participant;
+        $occupationDetails = json_decode($participant->occupation_details);
+//
+//        PDF::setOptions([
+//            'debugCss' => true,
+//            'debugLayout' => true,
+//            'debugLayoutLines' => true,
+//            'debugLayoutBlocks' => true,
+//            'debugLayoutInline' => true,
+//            'debugLayoutPaddingBox' => true,
+//        ]);
+//        return $pdf = PDF::loadView('pdf.participant.ticket', compact('participant'))->stream();
+//        return $pdf->download('participant.pdf');
 
-        PDF::setOptions([
-            'debugCss' => true,
-            'debugLayout' => true,
-            'debugLayoutLines' => true,
-            'debugLayoutBlocks' => true,
-            'debugLayoutInline' => true,
-            'debugLayoutPaddingBox' => true,
-        ]);
-        return $pdf = PDF::loadView('pdf.participant.ticket', compact('participant'))->stream();
-        return $pdf->download('participant.pdf');
+        return view('admin.participants.show', compact('participant', 'occupationDetails'));
     }
 
     /**

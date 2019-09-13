@@ -54,16 +54,16 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{ route('participant.index') }}">All</a>
+                            <a href="{{ route('admin.participant.index') }}">All</a>
                         </li>
                         <li>
-                            <a href="{{ route('participant.index', 'former-students') }}">Former Students</a>
+                            <a href="{{ route('admin.participant.index', 'former-students') }}">Former Students</a>
                         </li>
                         <li>
-                            <a href="{{ route('participant.index', 'nrb-former-students') }}">Non Returning Bangladeshi Former Students</a>
+                            <a href="{{ route('admin.participant.index', 'nrb-former-students') }}">Non Returning Bangladeshi Former Students</a>
                         </li>
                         <li>
-                            <a href="{{ route('participant.index', 'current-students') }}">Current Students</a>
+                            <a href="{{ route('admin.participant.index', 'current-students') }}">Current Students</a>
                         </li>
 
                     </ul>
