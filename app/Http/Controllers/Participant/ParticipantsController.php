@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Participant;
 
 use App\Models\Participant\Guest;
 use App\Models\Participant\Participants;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Database\QueryException;
 use PDOException;
 use Illuminate\Session\TokenMismatchException;
+use DB;
 
 class ParticipantsController extends Controller
 {
@@ -148,13 +150,12 @@ class ParticipantsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $uid
      * @return \Illuminate\Http\Response
      */
     public function show($uid)
     {
         $participant = Participants::where('uid', $uid)->with('guests')->first();
-//        return $participant;
         $occupationDetails = json_decode($participant->occupation_details);
 //
 //        PDF::setOptions([
@@ -297,8 +298,25 @@ class ParticipantsController extends Controller
         }
     }
 
-    public function eventEntries()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function eventEntries(Request $request)
     {
-        
+        $participant = Participants::where('uid', $request->participant_id)->first();
+
+        if($participant) {
+            $input = $request->only('participant_id', 'guests');
+            $input['participant_id'] = $participant->id;
+            $input['updated_by'] = "";
+            $input['created_at'] = $input['updated_at'] = Carbon::now();
+
+            DB::table('participants_entries')->insert($input);
+
+            return response()->json(['success' => 'Entry Successfull'], 200);
+        }
+
+        return response()->json(['error' => 'Server Error!'], 500);
     }
 }

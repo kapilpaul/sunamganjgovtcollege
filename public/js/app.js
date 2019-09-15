@@ -14637,7 +14637,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = Object({"NODE_ENV":"development"}).MIX_APP_URL;
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
     return response;
@@ -50433,9 +50433,7 @@ var commonStore = {
     items: [],
     page: 1,
     pageCount: 2,
-    token: null,
-    psid: "",
-    bulkSelected: []
+    token: null
   },
   getters: {
     validationErrors: function validationErrors(state) {
@@ -50452,12 +50450,6 @@ var commonStore = {
     },
     pageCount: function pageCount(state) {
       return state.pageCount;
-    },
-    psid: function psid(state) {
-      return state.psid;
-    },
-    bulkSelected: function bulkSelected(state) {
-      return state.bulkSelected;
     }
   },
   mutations: {
@@ -50492,21 +50484,6 @@ var commonStore = {
       localStorage.removeItem("token");
       localStorage.removeItem("expiration");
       state.token = null;
-    },
-    setPSID: function setPSID(state, payload) {
-      state.psid = payload;
-    },
-    setBulkSelected: function setBulkSelected(state, payload) {
-      if (payload.deselectAll) {
-        Vue.set(state, "bulkSelected", []);
-      } else {
-        state.bulkSelected.push(payload);
-      }
-    },
-    removeFromBulkSelected: function removeFromBulkSelected(state, payload) {
-      var index = state.bulkSelected.indexOf(payload);
-
-      state.bulkSelected.splice(index, 1);
     }
   },
   actions: {
@@ -50536,22 +50513,6 @@ var commonStore = {
       var commit = _ref5.commit;
 
       commit("setPageCount", payload);
-    },
-    SET_PSID: function SET_PSID(_ref6, payload) {
-      var commit = _ref6.commit;
-
-      commit("setPSID", payload);
-    },
-    SET_BULK_SELECTED: function SET_BULK_SELECTED(_ref7, payload) {
-      var commit = _ref7.commit;
-
-      if (payload.checked) {
-        commit("setBulkSelected", payload.index);
-      } else if (payload.deselectAll) {
-        commit("setBulkSelected", { deselectAll: payload.deselectAll });
-      } else {
-        commit("removeFromBulkSelected", payload.index);
-      }
     }
   }
 };
@@ -51080,7 +51041,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
-      imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
+      imageRulesUrl: Object({"NODE_ENV":"development"}).MIX_APP_ROOT + "/registration/photograph/rules"
     };
   },
 

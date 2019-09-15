@@ -6,8 +6,6 @@ export const commonStore = {
     page: 1,
     pageCount: 2,
     token: null,
-    psid: "",
-    bulkSelected: []
   },
   getters: {
     validationErrors: state => {
@@ -24,12 +22,6 @@ export const commonStore = {
     },
     pageCount: state => {
       return state.pageCount;
-    },
-    psid: state => {
-      return state.psid;
-    },
-    bulkSelected: state => {
-      return state.bulkSelected;
     }
   },
   mutations: {
@@ -64,21 +56,6 @@ export const commonStore = {
       localStorage.removeItem("token");
       localStorage.removeItem("expiration");
       state.token = null;
-    },
-    setPSID(state, payload) {
-      state.psid = payload;
-    },
-    setBulkSelected(state, payload) {
-      if (payload.deselectAll) {
-        Vue.set(state, "bulkSelected", []);
-      } else {
-        state.bulkSelected.push(payload);
-      }
-    },
-    removeFromBulkSelected(state, payload) {
-      let index = state.bulkSelected.indexOf(payload);
-
-      state.bulkSelected.splice(index, 1);
     }
   },
   actions: {
@@ -98,18 +75,6 @@ export const commonStore = {
     },
     setPageCount: ({ commit }, payload) => {
       commit("setPageCount", payload);
-    },
-    SET_PSID: ({ commit }, payload) => {
-      commit("setPSID", payload);
-    },
-    SET_BULK_SELECTED: ({ commit }, payload) => {
-      if (payload.checked) {
-        commit("setBulkSelected", payload.index);
-      } else if (payload.deselectAll) {
-        commit("setBulkSelected", { deselectAll: payload.deselectAll });
-      } else {
-        commit("removeFromBulkSelected", payload.index);
-      }
     }
   }
 };
