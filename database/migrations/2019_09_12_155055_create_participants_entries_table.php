@@ -17,6 +17,7 @@ class CreateParticipantsEntriesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('participant_id');
             $table->integer('guests')->default(0);
+            $table->integer('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

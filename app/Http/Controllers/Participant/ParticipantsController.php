@@ -292,4 +292,9 @@ class ParticipantsController extends Controller
             return redirect()->route('participant.index');
         }
     }
+
+    public function eventEntries()
+    {
+        
+    }
 }
