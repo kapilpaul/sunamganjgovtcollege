@@ -13,8 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::middleware(['auth:api'])->group(function () {
+    /*
+    *  Participant Routes
+    */
+    Route::group(['namespace' => 'Participant', 'prefix' => 'participants'], function () {
+        Route::get('/{paginate?}', 'ParticipantsController@allParticipants')->name('api.admin.participant.index');
+    });
 });
 
 

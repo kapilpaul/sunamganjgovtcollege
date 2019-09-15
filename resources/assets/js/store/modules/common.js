@@ -45,21 +45,35 @@ export const commonStore = {
     }
   },
   actions: {
-    setValidationErrors: ({ commit }, payload) => {
+    setValidationErrors: ({
+      commit
+    }, payload) => {
       commit("setValidationErrors", payload);
     },
-    setSubmitted: ({ commit }, payload) => {
+    setSubmitted: ({
+      commit
+    }, payload) => {
       commit("setSubmitted", payload);
     },
-    setItems: ({ commit }, payload) => {
-      axios.get(payload.url, getHeader()).then(response => {
-        commit("setItems", response.data);
-      });
+    setItems: ({
+      commit
+    }, payload) => {
+      if (typeof payload.url !== 'undefined') {
+        axios.get(payload.url, getHeader()).then(response => {
+          commit("setItems", response.data);
+        });
+      } else {
+        commit("setItems", payload);
+      }
     },
-    setPage: ({ commit }, payload) => {
+    setPage: ({
+      commit
+    }, payload) => {
       commit("setPage", payload);
     },
-    setPageCount: ({ commit }, payload) => {
+    setPageCount: ({
+      commit
+    }, payload) => {
       commit("setPageCount", payload);
     }
   }

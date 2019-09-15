@@ -9,29 +9,24 @@
             <tr>
               <th style="width: 20px;" class="text-center">#</th>
               <th>Name</th>
+              <th>Guests</th>
               <th>Mobile No</th>
-              <th>Country</th>
               <th>Paid</th>
               <th style="width: 150px;" class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <!-- <td>
-                <a
-                  target="_blank"
-                  href=""
-                >{{ $participant->name }}</a>
-              </td>
-              <td>{{ $participant->mobile_no }}</td>
-              <td>{{ $participant->country }}</td>
+            <tr v-for="(participant, index) in participants" :key="participant.id">
+              <td>{{ index + 1 }}</td>
               <td>
-                @if($participant->paid == 0)
-                <p class="label label-warning">Not Paid</p>@else
-                <p class="label label-success">Paid</p>@endif
-              </td>-->
-
+                <a target="_blank" href>{{ participant.name }}</a>
+              </td>
+              <td>{{ participant.guests.length }}</td>
+              <td>{{ participant.mobile_no }}</td>
+              <td>
+                <p class="label label-warning" v-if="participant.paid === 0">Not Paid</p>
+                <p class="label label-success" v-if="participant.paid === 1">Paid</p>
+              </td>
               <td class="text-center">
                 <div class="btn-group btn-group-xs">
                   <a
@@ -73,7 +68,7 @@ export default {
   data() {
     return {
       items: [],
-      participantsUrl: axios.defaults.baseURL + "participants"
+      participantsUrl: axios.defaults.baseURL + "participants/paginate"
     };
   },
   components: {
@@ -83,14 +78,13 @@ export default {
   computed: {
     participants() {
       let items = this.$store.getters.items;
-      if (typeof items.participants !== "undefined") {
-        let pageCount = items.participants.last_page
-          ? items.participants.last_page
-          : 2;
+
+      if (typeof items !== "undefined") {
+        let pageCount = items.last_page ? items.last_page : 1;
         this.$store.dispatch("setPageCount", pageCount);
       }
 
-      return items.participants;
+      return items.data;
     }
   },
   mounted() {

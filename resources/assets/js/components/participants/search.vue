@@ -21,11 +21,11 @@ export default {
     };
   },
   mounted() {
-    // this.fetchParticipants();
+    this.fetchParticipants();
   },
   methods: {
     fetchParticipants() {
-      let url = "";
+      let url = "participants";
       let headerData = this.$store.getters.getHeader;
 
       axios.get(url, headerData).then(response => {
@@ -33,11 +33,24 @@ export default {
       });
     },
     searchFilter() {
-      let data = this.$store.getters.Participants;
+      if (this.search !== "") {
+        let searchText = this.search.toLowerCase();
+        let data = this.$store.getters.Participants;
 
-      data.filter(item => {
-        return item;
-      });
+        let filteredData = data.filter(item => {
+          if (
+            item.name.toLowerCase().match(searchText) ||
+            item.alias_id.toLowerCase().match(searchText) ||
+            item.uid.toLowerCase().match(searchText) ||
+            item.email.toLowerCase().match(searchText) ||
+            item.mobile_no.toLowerCase().match(searchText)
+          ) {
+            return item;
+          }
+        });
+
+        this.$store.dispatch("setItems", { data: filteredData });
+      }
     }
   }
 };

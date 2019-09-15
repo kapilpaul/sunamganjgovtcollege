@@ -14639,7 +14639,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://testcollage.localhost/api/";
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
   return response;
@@ -50484,9 +50484,13 @@ var commonStore = {
     setItems: function setItems(_ref3, payload) {
       var commit = _ref3.commit;
 
-      axios.get(payload.url, _getHeader()).then(function (response) {
-        commit("setItems", response.data);
-      });
+      if (typeof payload.url !== 'undefined') {
+        axios.get(payload.url, _getHeader()).then(function (response) {
+          commit("setItems", response.data);
+        });
+      } else {
+        commit("setItems", payload);
+      }
     },
     setPage: function setPage(_ref4, payload) {
       var commit = _ref4.commit;
@@ -51054,7 +51058,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
-      imageRulesUrl: "http://testcollage.localhost" + "/registration/photograph/rules"
+      imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
     };
   },
 
@@ -52999,11 +53003,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -53011,7 +53010,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       items: [],
-      participantsUrl: axios.defaults.baseURL + "participants"
+      participantsUrl: axios.defaults.baseURL + "participants/paginate"
     };
   },
 
@@ -53022,12 +53021,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     participants: function participants() {
       var items = this.$store.getters.items;
-      if (typeof items.participants !== "undefined") {
-        var pageCount = items.participants.last_page ? items.participants.last_page : 2;
+
+      if (typeof items !== "undefined") {
+        var pageCount = items.last_page ? items.last_page : 1;
         this.$store.dispatch("setPageCount", pageCount);
       }
 
-      return items.participants;
+      return items.data;
     }
   },
   mounted: function mounted() {
@@ -53163,14 +53163,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    // this.fetchParticipants();
+    this.fetchParticipants();
   },
 
   methods: {
     fetchParticipants: function fetchParticipants() {
       var _this = this;
 
-      var url = "";
+      var url = "participants";
       var headerData = this.$store.getters.getHeader;
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url, headerData).then(function (response) {
@@ -53178,11 +53178,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     searchFilter: function searchFilter() {
-      var data = this.$store.getters.Participants;
+      if (this.search !== "") {
+        var searchText = this.search.toLowerCase();
+        var data = this.$store.getters.Participants;
 
-      data.filter(function (item) {
-        return item;
-      });
+        var filteredData = data.filter(function (item) {
+          if (item.name.toLowerCase().match(searchText) || item.alias_id.toLowerCase().match(searchText) || item.uid.toLowerCase().match(searchText) || item.email.toLowerCase().match(searchText) || item.mobile_no.toLowerCase().match(searchText)) {
+            return item;
+          }
+        });
+
+        this.$store.dispatch("setItems", { data: filteredData });
+      }
     }
   }
 });
@@ -53468,7 +53475,45 @@ var render = function() {
           "div",
           { staticClass: "table-responsive" },
           [
-            _vm._m(0),
+            _c("table", { staticClass: "table table-vcenter table-striped" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.participants, function(participant, index) {
+                  return _c("tr", { key: participant.id }, [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("a", { attrs: { target: "_blank", href: "" } }, [
+                        _vm._v(_vm._s(participant.name))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(participant.guests.length))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(participant.mobile_no))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      participant.paid === 0
+                        ? _c("p", { staticClass: "label label-warning" }, [
+                            _vm._v("Not Paid")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      participant.paid === 1
+                        ? _c("p", { staticClass: "label label-success" }, [
+                            _vm._v("Paid")
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ])
+                }),
+                0
+              )
+            ]),
             _vm._v(" "),
             _c("pagination", {
               attrs: {
@@ -53489,68 +53534,64 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table table-vcenter table-striped" }, [
-      _c("thead", [
-        _c("tr", [
-          _c(
-            "th",
-            { staticClass: "text-center", staticStyle: { width: "20px" } },
-            [_vm._v("#")]
-          ),
-          _vm._v(" "),
-          _c("th", [_vm._v("Name")]),
-          _vm._v(" "),
-          _c("th", [_vm._v("Mobile No")]),
-          _vm._v(" "),
-          _c("th", [_vm._v("Country")]),
-          _vm._v(" "),
-          _c("th", [_vm._v("Paid")]),
-          _vm._v(" "),
-          _c(
-            "th",
-            { staticClass: "text-center", staticStyle: { width: "150px" } },
-            [_vm._v("Actions")]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("td"),
-          _vm._v(" "),
-          _c("td", { staticClass: "text-center" }, [
-            _c("div", { staticClass: "btn-group btn-group-xs" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: {
-                    target: "_blank",
-                    href: "",
-                    "data-toggle": "tooltip",
-                    title: "",
-                    "data-original-title": "Show"
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-eye" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: {
-                    href: "javascript:void(0)",
-                    "data-toggle": "tooltip",
-                    title: "",
-                    "data-original-title": "Edit"
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-pencil" })]
-              )
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "text-center", staticStyle: { width: "20px" } },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Guests")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Mobile No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Paid")]),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "text-center", staticStyle: { width: "150px" } },
+          [_vm._v("Actions")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center" }, [
+      _c("div", { staticClass: "btn-group btn-group-xs" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-default",
+            attrs: {
+              target: "_blank",
+              href: "",
+              "data-toggle": "tooltip",
+              title: "",
+              "data-original-title": "Show"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-eye" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-default",
+            attrs: {
+              href: "javascript:void(0)",
+              "data-toggle": "tooltip",
+              title: "",
+              "data-original-title": "Edit"
+            }
+          },
+          [_c("i", { staticClass: "fa fa-pencil" })]
+        )
       ])
     ])
   }

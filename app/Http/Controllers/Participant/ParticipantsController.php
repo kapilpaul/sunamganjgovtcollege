@@ -45,6 +45,21 @@ class ParticipantsController extends Controller
     }
 
     /**
+     * @param bool $paginate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allParticipants($paginate = false)
+    {
+        if(! $paginate) {
+            $participants = Participants::with('guests')->get();
+        } else {
+            $participants = Participants::with('guests')->paginate(100);
+        }
+
+        return response()->json($participants, 200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param string $studentStatus
