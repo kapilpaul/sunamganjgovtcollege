@@ -176,9 +176,9 @@
         <div class="col-md-3">
           <input-text
             label="Company Name (Optional)"
-            name="companty_name"
+            name="company_name"
             placeholder="Company Name"
-            v-model="participantData.occupation_details.companty_name"
+            v-model="participantData.occupation_details.company_name"
           ></input-text>
         </div>
 

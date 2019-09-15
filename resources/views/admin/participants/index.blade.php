@@ -28,7 +28,11 @@
                 @foreach($participants as $participant)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td><a href="#">{{ $participant->name }}</a></td>
+                    <td>
+                        <a target="_blank" href="{{ route('admin.participant.show', $participant->uid) }}">
+                            {{ $participant->name }}
+                        </a>
+                    </td>
                     <td>{{ $participant->mobile_no }}</td>
                     <td>{{ $participant->country }}</td>
                     <td>
@@ -41,11 +45,11 @@
 
                     <td class="text-center">
                         <div class="btn-group btn-group-xs">
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Show"><i class="fa fa-eye"></i></a>
+                            <a target="_blank" href="{{ route('admin.participant.show', $participant->uid) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Show"><i class="fa fa-eye"></i></a>
 
                             <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
 
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                            {{--<a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Delete"><i class="fa fa-times"></i></a>--}}
                         </div>
                     </td>
                 </tr>
@@ -55,4 +59,6 @@
             </table>
         </div>
     </div>
+
+    {{ $participants->links('partials.pagination') }}
 @stop

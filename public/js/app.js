@@ -14637,7 +14637,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = Object({"NODE_ENV":"development"}).MIX_APP_URL;
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
     return response;
@@ -51080,7 +51080,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
-      imageRulesUrl: Object({"NODE_ENV":"development"}).MIX_APP_ROOT + "/registration/photograph/rules"
+      imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
     };
   },
 
@@ -52419,21 +52419,21 @@ var render = function() {
                   _c("input-text", {
                     attrs: {
                       label: "Company Name (Optional)",
-                      name: "companty_name",
+                      name: "company_name",
                       placeholder: "Company Name"
                     },
                     model: {
                       value:
-                        _vm.participantData.occupation_details.companty_name,
+                        _vm.participantData.occupation_details.company_name,
                       callback: function($$v) {
                         _vm.$set(
                           _vm.participantData.occupation_details,
-                          "companty_name",
+                          "company_name",
                           $$v
                         )
                       },
                       expression:
-                        "participantData.occupation_details.companty_name"
+                        "participantData.occupation_details.company_name"
                     }
                   })
                 ],
