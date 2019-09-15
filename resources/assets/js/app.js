@@ -17,33 +17,33 @@ import axios from "axios";
  */
 
 console.log(
-    "%c Developed by Kapil",
-    "background-color:#333;padding:20px;color:#fff;border-radius:4px"
+  "%c Developed by Kapil",
+  "background-color:#333;padding:20px;color:#fff;border-radius:4px"
 );
 
 axios.defaults.baseURL = process.env.MIX_APP_URL;
 
 axios.interceptors.response.use(
-    function (response) {
-        return response;
-    },
-    function (error) {
-        store.dispatch("setSubmitted", false);
-        store.dispatch("setValidationErrors", error.response.data);
-        throw error.response;
-    }
+  function(response) {
+    return response;
+  },
+  function(error) {
+    store.dispatch("setSubmitted", false);
+    store.dispatch("setValidationErrors", error.response.data);
+    throw error.response;
+  }
 );
 
-import {
-    store
-} from './store/index'
+import { store } from "./store/index";
 
-import participantCreate from './components/participants/create';
+import participantCreate from "./components/participants/create";
+import participantEntries from "./components/participants/entries";
 
 const app = new Vue({
-    el: "#sunamganj-college",
-    store,
-    components: {
-        participantCreate
-    }
+  el: "#sunamganj-college",
+  store,
+  components: {
+    participantCreate,
+    participantEntries
+  }
 });

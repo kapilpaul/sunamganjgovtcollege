@@ -520,7 +520,7 @@ export default {
   position: relative;
 }
 .loader_area {
-  position: absolute;
+  position: fixed;
   z-index: 99;
   width: 100%;
   height: 100%;

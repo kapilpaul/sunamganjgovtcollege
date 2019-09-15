@@ -298,6 +298,11 @@ class ParticipantsController extends Controller
         }
     }
 
+    public function entriesCreate()
+    {
+        return view('admin.participants.entries');
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

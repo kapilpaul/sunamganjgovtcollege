@@ -19,6 +19,6 @@ class authCheck
         if(Sentinel::check())
             return $next($request);
         else
-            return redirect()->route('home');
+            return redirect()->route('admin.home');
     }
 }

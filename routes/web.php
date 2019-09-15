@@ -31,6 +31,7 @@ Route::middleware(['authcheck'])->group(function () {
     */
     Route::group(['namespace' => 'Participant', 'prefix' => 'participants'], function () {
         Route::post('/filter', 'ParticipantsController@filter')->name('admin.participant.filter');
+        Route::get('entries', 'ParticipantsController@entriesCreate')->name('admin.participant.entries.create');
         Route::get('/{student_status?}', 'ParticipantsController@index')->name('admin.participant.index');
         Route::get('{uid}/show', 'ParticipantsController@show')->name('admin.participant.show');
     });

@@ -5,7 +5,7 @@ export const commonStore = {
     items: [],
     page: 1,
     pageCount: 2,
-    token: null,
+    token: null
   },
   getters: {
     validationErrors: state => {
@@ -22,6 +22,9 @@ export const commonStore = {
     },
     pageCount: state => {
       return state.pageCount;
+    },
+    getHeader: state => {
+      return getHeader();
     }
   },
   mutations: {
@@ -39,23 +42,6 @@ export const commonStore = {
     },
     setPageCount: (state, payload) => {
       state.pageCount = payload;
-    },
-    setToken: state => {
-      var token = localStorage.getItem("token");
-      var expiration = localStorage.getItem("expiration");
-
-      if (!token || !expiration) return null;
-
-      if (Date.now() > parseInt(expiration)) {
-        this.destroyToken();
-      } else {
-        state.token = token;
-      }
-    },
-    destroyToken() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("expiration");
-      state.token = null;
     }
   },
   actions: {
@@ -66,7 +52,7 @@ export const commonStore = {
       commit("setSubmitted", payload);
     },
     setItems: ({ commit }, payload) => {
-      axios.get(payload.url, Vue.auth.getHeader()).then(response => {
+      axios.get(payload.url, getHeader()).then(response => {
         commit("setItems", response.data);
       });
     },
@@ -77,4 +63,33 @@ export const commonStore = {
       commit("setPageCount", payload);
     }
   }
+};
+
+const getToken = () => {
+  var token = localStorage.getItem("token");
+  var expiration = localStorage.getItem("expiration");
+
+  if (!token || !expiration) return null;
+
+  if (Date.now() > parseInt(expiration)) {
+    destroyToken();
+    return null;
+  } else {
+    return token;
+  }
+};
+
+const getHeader = () => {
+  const tokenData = getToken();
+  return {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + tokenData
+    }
+  };
+};
+
+const destroyToken = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expiration");
 };

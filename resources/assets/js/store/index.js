@@ -1,34 +1,26 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {
-  commonStore
-} from "./modules/common";
+import { commonStore } from "./modules/common";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    elements: []
+    Participants: []
   },
   getters: {
-    elements: state => {
-      return state.elements;
+    Participants: state => {
+      return state.Participants;
     }
   },
   mutations: {
-    setElements: (state, payload) => {
-      if (typeof payload.data !== "undefined") {
-        state.elements = payload.data;
-      } else {
-        state.elements.push(payload);
-      }
+    setParticipants: (state, payload) => {
+      state.Participants = payload;
     }
   },
   actions: {
-    setElements: ({
-      commit
-    }, payload) => {
-      commit("setElements", payload);
+    setParticipants: ({ commit }, payload) => {
+      commit("setParticipants", payload);
     }
   },
   modules: {
