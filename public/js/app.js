@@ -14639,7 +14639,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://testcollage.localhost/api/";
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
   return response;
@@ -51058,7 +51058,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
-      imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
+      imageRulesUrl: "http://testcollage.localhost" + "/registration/photograph/rules"
     };
   },
 
@@ -53178,9 +53178,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     searchFilter: function searchFilter() {
+      var data = this.$store.getters.Participants;
+
       if (this.search !== "") {
         var searchText = this.search.toLowerCase();
-        var data = this.$store.getters.Participants;
 
         var filteredData = data.filter(function (item) {
           if (item.name.toLowerCase().match(searchText) || item.alias_id.toLowerCase().match(searchText) || item.uid.toLowerCase().match(searchText) || item.email.toLowerCase().match(searchText) || item.mobile_no.toLowerCase().match(searchText)) {
@@ -53189,6 +53190,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         this.$store.dispatch("setItems", { data: filteredData });
+      } else {
+        this.$store.dispatch("setItems", { data: data });
       }
     }
   }

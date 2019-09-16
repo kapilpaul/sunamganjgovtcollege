@@ -33,9 +33,10 @@ export default {
       });
     },
     searchFilter() {
+        let data = this.$store.getters.Participants;
+
       if (this.search !== "") {
         let searchText = this.search.toLowerCase();
-        let data = this.$store.getters.Participants;
 
         let filteredData = data.filter(item => {
           if (
@@ -50,6 +51,8 @@ export default {
         });
 
         this.$store.dispatch("setItems", { data: filteredData });
+      } else {
+        this.$store.dispatch("setItems", { data: data });
       }
     }
   }
