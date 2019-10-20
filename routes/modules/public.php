@@ -11,11 +11,10 @@
  */
 Route::group(['namespace' => 'Participant'], function () {
     if (request()->is('api/*')) {
-
         Route::post('register/store', 'ParticipantsController@store')->name('api.participant.store');
 
     } else {
-        Route::get('/', function() {
+        Route::get('/', function () {
             return redirect()->route('participant.create', 'former-student');
         })->name('frontend.home');
 
@@ -24,6 +23,10 @@ Route::group(['namespace' => 'Participant'], function () {
         Route::view('registration/photograph/rules', 'frontend.rules.photograph')->name('registration.photo.rules');
 
     }
+});
+
+Route::group(['namespace' => 'Payment'], function () {
+    Route::post('payment/{status}', 'PaymentController@status')->name('payment.status');
 });
 
 

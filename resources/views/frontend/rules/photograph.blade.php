@@ -26,7 +26,7 @@
 
                     <h6 class="mt-20 fz-17">Eyeglasses</h6>
 
-                    <p>Eye glasses do not allowed in registration photos.</p>
+                    <p>Eye glasses not allowed in registration photos.</p>
 
                     <h6 class="mt-20 fz-17">Photo Dimensions</h6>
                     <p>Your photo must be square-shaped, meaning the photo’s height must be the same as its width. The minimum dimensions for your photo are 600 pixels x 600 pixels (height x width). The maximum dimensions are 1200 pixels x 1200 pixels (height x width).</p>

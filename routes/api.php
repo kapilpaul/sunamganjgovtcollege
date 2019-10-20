@@ -29,3 +29,6 @@ Route::middleware(['auth:api'])->group(function () {
 
 //open routes
 Route::prefix('')->group(base_path('routes/modules/public.php'));
+
+Route::any('payment/process', 'Payment\\PaymentController@process')->name('api.payment.process');
+
