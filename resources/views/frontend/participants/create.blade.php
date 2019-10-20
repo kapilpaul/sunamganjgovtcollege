@@ -12,10 +12,10 @@
                     <p class="lead">Sunamganj Govt. College's Platinum Jubilee 2020 Organized by former students and students</p>
                 </div>
                 <button class="your-button-class" id="sslczPayBtn"
-                        order="abcde"
+                        token="if you have any token validation"
                         postdata="your javascript arrays or objects which requires in backend"
-                        endpoint="{{ route('api.payment.process') }}">
-                    Pay Now
+                        order="sdsdsds"
+                        endpoint="http://sunamganjgovtcollege.localhost/api/payment/process"> Pay Now
                 </button>
 
                 <participant-create

@@ -26,7 +26,7 @@ Route::group(['namespace' => 'Participant'], function () {
 });
 
 Route::group(['namespace' => 'Payment'], function () {
-    Route::post('payment/{status}', 'PaymentController@status')->name('payment.status');
+    Route::any('payment/process/{status}', 'PaymentController@status')->name('payment.status');
 });
 
 
