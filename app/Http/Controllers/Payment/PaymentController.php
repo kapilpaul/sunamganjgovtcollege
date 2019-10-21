@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payment;
 
+use App\Models\Participant\Participants;
 use App\Models\Payment\Payment;
 use App\Utilities\RequestHandler;
 use Illuminate\Http\Request;
@@ -76,8 +77,8 @@ class PaymentController extends Controller
         # EMI STATUS
         $post_data['emi_option'] = "0";
 
-        Payment::process($post_data);
-
+        $response = Payment::process($post_data);
+        return $response;
 
     }
 
@@ -89,6 +90,50 @@ class PaymentController extends Controller
      */
     public function status(Request $request, $status)
     {
-        return Payment::validation($request->val_id);
+        $allowedParams = ['success', 'failed', 'canceled'];
+        if (! in_array($status, $allowedParams)) {
+            abort(404);
+        }
+
+        if ($request->status == 'VALID') {
+            if (isset($request->val_id)) {
+                $paymentValid = Payment::validation($request->val_id);
+
+                switch ($paymentValid['status']) {
+                    case "VALID":
+                        return $this->validPayment($paymentValid);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        abort(404);
+    }
+
+    /**
+     * @param $paymentData
+     * @return mixed
+     */
+    public function validPayment($paymentData)
+    {
+        $participant = Participants::where('uid', $paymentData['value_a'])->first();
+
+        if ($participant) {
+            $participant->update(['paid' => 1]);
+
+            $data = [
+                'tran_id' => $paymentData['tran_id'],
+                "participant_id" => $participant->id,
+                "currency" => $paymentData['currency'],
+                "amount" => $paymentData['amount'],
+                "store_amount" => $paymentData['store_amount'],
+                "currency_amount" => $paymentData['currency_amount'],
+                "card_issuer" => $paymentData['card_issuer']
+            ];
+
+            return Payment::create($data);
+        }
+
     }
 }

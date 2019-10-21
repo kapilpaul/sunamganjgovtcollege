@@ -11,7 +11,7 @@
         <div class="loader_area text-center" v-if="loading">
           <div class="loader">
             <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
-            <span class="sr-only">Loading...</span>
+            <span class="loading_text">{{ loadingText }}</span>
           </div>
         </div>
 
@@ -410,6 +410,7 @@ export default {
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
+      loadingText: "Processing...",
       imageRulesUrl: process.env.MIX_APP_ROOT + "/registration/photograph/rules"
     };
   },
@@ -437,7 +438,7 @@ export default {
 
       if (this.immigrantStudent) {
         this.selfRegPrice = registrationPrice.nrb_only_registration;
-        this.moneySymbol = "$";
+        this.moneySymbol = "৳"; //"$"
       } else {
         this.selfRegPrice = registrationPrice.only_registration;
         this.moneySymbol = "৳";
@@ -486,8 +487,11 @@ export default {
       axios
         .post("register/store", data)
         .then(response => {
-          console.log(response);
-          this.loading = false;
+            this.loadingText = "Redirecting you to Payment";
+          // this.loading = false;
+          if(response.data.redirect_url) {
+              window.location.replace(response.data.redirect_url);
+          }
         })
         .catch(error => {
           console.log(error.data);
@@ -535,5 +539,9 @@ export default {
 }
 .loader i.fa.fa-spin {
   color: #000000de;
+}
+.loading_text{
+  display: block;
+  margin-top: 10px;
 }
 </style>

@@ -32,7 +32,7 @@ class Payment extends Model
      * @var array
      */
     protected $fillable = [
-        "participant_id", "tran_id", "currency", "amount", "store_amount", "card_issuer"
+        "participant_id", "tran_id", "currency", "amount", "store_amount", "currency_amount", "card_issuer"
     ];
 
     /**
@@ -64,7 +64,8 @@ class Payment extends Model
      * OPTIONAL
      * value_a, value_b, value_c, value_d
      *
-     * @return array
+     *
+     * @return array|string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function process(array $data)
@@ -86,12 +87,13 @@ class Payment extends Model
 
         if ($sslcz['status'] == 'SUCCESS') {
             if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
-                header("Location: " . $sslcz['GatewayPageURL']);
-                exit;
+                return ['status' => 'success', 'gateway_page_url' => $sslcz['GatewayPageURL']];
             } else {
-                echo "JSON Data parsing error!";
+                return ['status' => 'failed', 'message' => 'JSON Data parsing error!'];
             }
         }
+
+        return false;
     }
 
     /**
@@ -104,7 +106,6 @@ class Payment extends Model
         self::setStore();
 
         $url = self::$validationAPI . "?val_id=$val_id&store_id=" . self::$storeID . "&store_passwd=" . self::$storePassword;
-
         $result = RequestHandler::sendRequest($url);
 
         if ($result['res']->getStatusCode() == 200) {

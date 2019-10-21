@@ -50620,7 +50620,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n.registration-form[data-v-cf0ab8f8] {\n  position: relative;\n}\n.loader_area[data-v-cf0ab8f8] {\n  position: fixed;\n  z-index: 99;\n  width: 100%;\n  height: 100%;\n  background: #ffffffc2;\n  left: 0;\n  top: 0;\n}\n.loader[data-v-cf0ab8f8] {\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n.loader i.fa.fa-spin[data-v-cf0ab8f8] {\n  color: #000000de;\n}\n", ""]);
+exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n.registration-form[data-v-cf0ab8f8] {\n  position: relative;\n}\n.loader_area[data-v-cf0ab8f8] {\n  position: fixed;\n  z-index: 99;\n  width: 100%;\n  height: 100%;\n  background: #ffffffc2;\n  left: 0;\n  top: 0;\n}\n.loader[data-v-cf0ab8f8] {\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n.loader i.fa.fa-spin[data-v-cf0ab8f8] {\n  color: #000000de;\n}\n.loading_text[data-v-cf0ab8f8] {\n  display: block;\n  margin-top: 10px;\n}\n", ""]);
 
 // exports
 
@@ -51058,6 +51058,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       guestRegPrice: 0,
       moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
+      loadingText: "Processing...",
       imageRulesUrl: "http://testcollage.localhost" + "/registration/photograph/rules"
     };
   },
@@ -51086,7 +51087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (this.immigrantStudent) {
         this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].nrb_only_registration;
-        this.moneySymbol = "$";
+        this.moneySymbol = "৳"; //"$"
       } else {
         this.selfRegPrice = __WEBPACK_IMPORTED_MODULE_4__Constants__["b" /* registrationPrice */].only_registration;
         this.moneySymbol = "৳";
@@ -51133,8 +51134,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("register/store", data).then(function (response) {
-        console.log(response);
-        _this.loading = false;
+        _this.loadingText = "Redirecting you to Payment";
+        // this.loading = false;
+        if (response.data.redirect_url) {
+          window.location.replace(response.data.redirect_url);
+        }
       }).catch(function (error) {
         console.log(error.data);
         _this.loading = false;
@@ -51816,15 +51820,15 @@ if (false) {
 var countries = ["Afghanistan", "Åland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia, Plurinational State of", "Bonaire, Sint Eustatius and Saba", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Curaçao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard Island and McDonald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia, the former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestinian Territory, Occupied", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Réunion", "Romania", "Russian Federation", "Rwanda", "Saint Barthélemy", "Saint Helena, Ascension and Tristan da Cunha", "Saint Kitts and Nevis", "Saint Lucia", "Saint Martin (French part)", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Sint Maarten (Dutch part)", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Timor-Leste", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela, Bolivarian Republic of", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"];
 
 var registrationPrice = {
-    only_registration: 300,
+    only_registration: 500,
     nrb_only_registration: 5,
     former_student_in_bd: {
         self: 1000,
         guest: 500
     },
     immigrant_former_student: {
-        self: 100,
-        guest: 50
+        self: 1000,
+        guest: 500
     },
     current_student: {
         self: 300,
@@ -51864,7 +51868,15 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _vm.loading
-            ? _c("div", { staticClass: "loader_area text-center" }, [_vm._m(0)])
+            ? _c("div", { staticClass: "loader_area text-center" }, [
+                _c("div", { staticClass: "loader" }, [
+                  _c("i", { staticClass: "fa fa-spinner fa-spin fa-5x fa-fw" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "loading_text" }, [
+                    _vm._v(_vm._s(_vm.loadingText))
+                  ])
+                ])
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-2" }, [
@@ -52818,18 +52830,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "loader" }, [
-      _c("i", { staticClass: "fa fa-spinner fa-spin fa-5x fa-fw" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

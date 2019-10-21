@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Participant;
 
 use App\Models\Participant\Guest;
 use App\Models\Participant\Participants;
+use App\Models\Payment\Payment;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ParticipantsController extends Controller
      */
     public function allParticipants($paginate = false)
     {
-        if(! $paginate) {
+        if (!$paginate) {
             $participants = Participants::with('guests')->get();
         } else {
             $participants = Participants::with('guests')->paginate(100);
@@ -87,8 +88,9 @@ class ParticipantsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function store(Request $request)
     {
@@ -107,13 +109,80 @@ class ParticipantsController extends Controller
 
             if ($participant = Participants::create($input)) {
                 $this->addGuest($request->guests, $participant->id);
-                return response()->json(['participant' => $participant], 200);
+
+                $payment = $this->processPayment(10, 'BDT', $participant->uid->toString(), $participant->alias_id);
+                return $payment;
             }
 
             return response()->json(['errors' => "Something went wrong!"], 500);
         } catch (\Exception $e) {
             return response()->json(['errors' => "Server Error!"], 500);
         }
+    }
+
+    /**
+     * @param $totalAmount
+     * @param $currency
+     * @param $valueA
+     * @param $valueB
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function processPayment($totalAmount, $currency, $valueA, $valueB)
+    {
+        $payment = $this->payment($totalAmount, $currency, $valueA, $valueB);
+
+        if ($payment['status'] == 'success') {
+            return response()->json(['redirect_url' => $payment['gateway_page_url']], 200);
+        }
+
+        return response()->json(['redirect_url' => false, 'message' => $payment['message']], 200);
+    }
+
+    /**
+     * @param $totalAmount
+     * @param $currency
+     * @param $valueA
+     * @param $valueB
+     * @return array|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function payment($totalAmount, $currency, $valueA, $valueB)
+    {
+        $data = [
+            'total_amount' => $totalAmount,
+            'currency' => $currency,
+            'tran_id' => Str::random(15),
+            'success_url' => route('payment.status', 'success'),
+            'fail_url' => route('payment.status', 'failed'),
+            'cancel_url' => route('payment.status', 'canceled'),
+
+            # CUSTOMER INFORMATION
+            'cus_name' => "Sunamganj College Registration",
+            'cus_email' => "info@sunamganjcollege.com",
+            'cus_add1' => "Dhaka",
+            'cus_add2' => "Dhaka",
+            'cus_city' => "Dhaka",
+            'cus_state' => "Dhaka",
+            'cus_postcode' => "1000",
+            'cus_country' => "Bangladesh",
+            'cus_phone' => '01111',
+
+            # SHIPMENT INFORMATION
+            'shipping_method' => "NO",
+            'num_of_item' => 1,
+            'product_name' => "Registration Fee",
+            'product_category' => "Registration",
+            'product_profile' => "non-physical-goods",
+
+            # OPTIONAL PARAMETERS
+            'value_a' => $valueA,
+            'value_b ' => $valueB,
+            'emi_option' => 0,
+        ];
+
+        $response = Payment::process($data);
+        return $response;
     }
 
     /**
@@ -326,7 +395,7 @@ class ParticipantsController extends Controller
     {
         $participant = Participants::where('uid', $request->participant_id)->first();
 
-        if($participant) {
+        if ($participant) {
             $input = $request->only('participant_id', 'guests');
             $input['participant_id'] = $participant->id;
             $input['updated_by'] = "";
