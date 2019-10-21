@@ -24,10 +24,12 @@
                                 <p class="mb-5">Group</p>
                                 <p class="mb-5">Subject</p>
                                 <p class="mb-5">Email</p>
+                                @if($participant->current_student != 1)
                                 <p class="mb-5">Occupation</p>
                                 <p class="mb-5">Designation</p>
                                 <p class="mb-5">Department</p>
                                 <p class="mb-5">Company Name</p>
+                                @endif
 
                                 @if($participant->occupation == 'other')
                                 <p class="mb-5">:: &nbsp;&nbsp; Occupation Name</p>
@@ -56,10 +58,13 @@
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $participant->group }}</p>
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $participant->subject }}</p>
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $participant->email }}</p>
+
+                                @if($participant->current_student != 1)
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $participant->occupation }}</p>
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $occupationDetails->designation }}</p>
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $occupationDetails->department }}</p>
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $occupationDetails->company_name }}</p>
+                                @endif
 
                                 @if($participant->occupation == 'other')
                                 <p class="mb-5">:: &nbsp;&nbsp; {{ $occupationDetails->occupation_name }}</p>
@@ -91,6 +96,9 @@
 
                     @if($participant->paid == 1)
                     <p class="label label-success fz-18">PAID</p>
+                        @if($participant->payment)
+                    <p class="mt-15"><i>Through {{ $participant->payment->card_issuer }}</i></p>
+                        @endif
                     @else
                     <p class="label label-warning fz-18">NOT PAID</p>
                     @endif

@@ -3,8 +3,10 @@
     <div class="registration-form p-0 pb-100">
       <errors></errors>
 
-      <span class="addtocalendar atc-style-theme registrationPriceFloating">
-        <a class="atcb-link" tabindex="1" id>{{moneySymbol}} {{ totalAmount }}</a>
+      <span class="atc-style-theme registrationPriceFloating">
+        <a class="atcb-link" tabindex="1" id
+          >{{ moneySymbol }} {{ totalAmount }}</a
+        >
       </span>
 
       <div class="row">
@@ -18,7 +20,12 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Title</label>
-            <select class="form-control" name="os0" required v-model="participantData.title">
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.title"
+            >
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
@@ -65,7 +72,8 @@
                 v-for="(n, keyIn) in 140"
                 :value="keyIn + 1880"
                 :key="keyIn"
-              >{{ keyIn + 1880 }}</option>
+                >{{ keyIn + 1880 }}</option
+              >
             </select>
           </div>
         </div>
@@ -80,7 +88,12 @@
               v-model="participantData.admission_year"
             >
               <option value="-1">Select Year</option>
-              <option v-for="(n, keyIn) in 70" :value="keyIn + 1944" :key="keyIn">{{ keyIn + 1944 }}</option>
+              <option
+                v-for="(n, keyIn) in 70"
+                :value="keyIn + 1944"
+                :key="keyIn"
+                >{{ keyIn + 1944 }}</option
+              >
             </select>
           </div>
         </div>
@@ -90,16 +103,31 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Class of Admission</label>
-            <select class="form-control" name="os0" required v-model="participantData.class">
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.class"
+            >
               <option value="-1">Select Class</option>
-              <option v-for="(item, classIn) in classes" :value="item" :key="classIn">{{ item }}</option>
+              <option
+                v-for="(item, classIn) in classes"
+                :value="item"
+                :key="classIn"
+                >{{ item }}</option
+              >
             </select>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label>Group</label>
-            <select class="form-control" name="os0" required v-model="participantData.group">
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.group"
+            >
               <option value="-1">Select Group</option>
               <option value="Science">Science</option>
               <option value="Arts">Arts</option>
@@ -144,13 +172,19 @@
         <div class="col-md-3">
           <div class="form-group">
             <label>Occupation</label>
-            <select class="form-control" name="os0" required v-model="participantData.occupation">
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.occupation"
+            >
               <option value="-1">Choose...</option>
               <option
                 v-for="(occupation, occupationIn) in occupations"
                 :value="occupation"
                 :key="occupationIn"
-              >{{ occupation }}</option>
+                >{{ occupation }}</option
+              >
             </select>
           </div>
         </div>
@@ -227,13 +261,19 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Country</label>
-            <select class="form-control" name="os0" required v-model="participantData.country">
+            <select
+              class="form-control"
+              name="os0"
+              required
+              v-model="participantData.country"
+            >
               <option value="-1">Choose...</option>
               <option
                 v-for="(country, index) in countries"
                 :value="country"
                 :key="index"
-              >{{ country }}</option>
+                >{{ country }}</option
+              >
             </select>
           </div>
         </div>
@@ -254,7 +294,7 @@
         <div
           class="row mt-15 mb-15"
           v-for="(item, keyIndex) in participantData.guests"
-          :key="componentKey+keyIndex"
+          :key="componentKey + keyIndex"
         >
           <div class="col-md-4">
             <input-text
@@ -269,13 +309,19 @@
           <div class="col-md-2">
             <div class="form-group">
               <label>Relation</label>
-              <select class="form-control" name="relation" required v-model="item.relation">
+              <select
+                class="form-control"
+                name="relation"
+                required
+                v-model="item.relation"
+              >
                 <option value="-1">Choose...</option>
                 <option
                   v-for="(relation, index) in relations"
                   :value="relation"
                   :key="index"
-                >{{ relation }}</option>
+                  >{{ relation }}</option
+                >
               </select>
             </div>
           </div>
@@ -293,13 +339,18 @@
             <image-upload v-model="item.image"></image-upload>
           </div>
           <div class="col-md-1">
-            <button class="btn btn-sm bg-danger mt-30" @click.prevent="removeGuest(keyIndex)">
+            <button
+              class="btn btn-sm bg-danger mt-30"
+              @click.prevent="removeGuest(keyIndex)"
+            >
               <i class="fa fa-times"></i>
             </button>
           </div>
         </div>
 
-        <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">Add Guest</button>
+        <button class="btn btn-success btn-sm mb-25" @click.prevent="addGuest">
+          Add Guest
+        </button>
       </div>
 
       <div class="row">
@@ -319,7 +370,9 @@
           id="reserve-btn"
           class="btn btn-success btn-lg"
           @click.prevent="submit"
-        >Reserve my Seat</button>
+        >
+          Reserve my Seat
+        </button>
       </div>
     </div>
   </div>
@@ -408,7 +461,7 @@ export default {
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "$" : "৳",
+      moneySymbol: this.immigrantStudent ? "৳" : "৳",
       loading: false,
       loadingText: "Processing...",
       imageRulesUrl: process.env.MIX_APP_ROOT + "/registration/photograph/rules"
@@ -487,10 +540,13 @@ export default {
       axios
         .post("register/store", data)
         .then(response => {
-            this.loadingText = "Redirecting you to Payment";
+          this.loadingText = "Redirecting you to Payment";
           // this.loading = false;
-          if(response.data.redirect_url) {
-              window.location.replace(response.data.redirect_url);
+          if (response.data.redirect_url) {
+            window.location.replace(response.data.redirect_url);
+          } else {
+            this.loading = false;
+            this.$store.dispatch("setValidationErrors", {errors: response.data.message});
           }
         })
         .catch(error => {
@@ -540,8 +596,9 @@ export default {
 .loader i.fa.fa-spin {
   color: #000000de;
 }
-.loading_text{
+.loading_text {
   display: block;
   margin-top: 10px;
+  font-weight: bold;
 }
 </style>

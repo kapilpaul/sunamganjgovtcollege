@@ -21,6 +21,12 @@ Route::group(['namespace' => 'Participant'], function () {
         Route::get('register/{studentStatus?}', 'ParticipantsController@create')->name('participant.create');
         Route::get('register/show/{id}', 'ParticipantsController@show')->name('participant.show');
         Route::view('registration/photograph/rules', 'frontend.rules.photograph')->name('registration.photo.rules');
+        Route::get('registration/payment/{uid}', 'ParticipantsController@registrationPayment')->name('registration.payment');
+        Route::get('registration/process/payment/{uid}', 'ParticipantsController@registrationPaymentProcess')->name('registration.payment.process');
+
+        Route::get('download/ticket/{uid}', 'ParticipantsController@getDataAfterPayment')->name('ticket.show');
+        Route::get('ticket/{uid}/pdf/download', 'ParticipantsController@downloadTicket')->name('ticket.download');
+
 
     }
 });

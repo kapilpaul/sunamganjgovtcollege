@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel HTML to PDF</title>
+    <title>Sunamganj Govt. College's Platinum Jubilee 2020</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
@@ -36,17 +36,6 @@
                         <p>{{ $participant->country }}</p>
                     </td>
                 </tr>
-                @if(count($participant->guests))
-                <tr>
-                    <td>
-                        <p style="font-weight: bold; margin-top: 15px;">Guests: {{ count($participant->guests) }}</p>
-
-                        @foreach($participant->guests as $guest)
-                        <p class="mt-5">{{ $guest->name }} ({{ $guest->relation }} / {{ $guest->age }})</p>
-                        @endforeach
-                    </td>
-                </tr>
-                @endif
             </table>
         </td>
         <td valign="top" style="width: 200px">
@@ -61,6 +50,31 @@
         </td>
     </tr>
 </table>
+
+@if(count($participant->guests))
+
+    <table>
+        <tr>
+            <td>
+                <p style="font-weight: bold; margin-top: 15px;">Guests: {{ count($participant->guests) }}</p>
+            </td>
+        </tr>
+        <tr>
+            @foreach($participant->guests as $guest)
+                <td>
+                    <div class="full-width text-center" style="padding: 10px; width: 70%">
+                        <img class="img-fluid" src="{{ public_path($guest->image) }}" alt="">
+                        <p class="mt-2 mb-0" style="margin-bottom: 0">
+                            {{ $guest->name }} <br>
+                            {{ $guest->relation }} <br>
+                            {{ $guest->age }} Years
+                        </p>
+                    </div>
+                </td>
+            @endforeach
+        </tr>
+</table>
+@endif
 
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

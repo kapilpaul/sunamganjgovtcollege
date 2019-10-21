@@ -14639,7 +14639,7 @@ window.Vue = __webpack_require__(15);
 
 console.log("%c Developed by Kapil", "background-color:#333;padding:20px;color:#fff;border-radius:4px");
 
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://testcollage.localhost/api/";
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = "http://sunamganjgovtcollege.localhost/api/";
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (response) {
   return response;
@@ -50620,7 +50620,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n.registration-form[data-v-cf0ab8f8] {\n  position: relative;\n}\n.loader_area[data-v-cf0ab8f8] {\n  position: fixed;\n  z-index: 99;\n  width: 100%;\n  height: 100%;\n  background: #ffffffc2;\n  left: 0;\n  top: 0;\n}\n.loader[data-v-cf0ab8f8] {\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n.loader i.fa.fa-spin[data-v-cf0ab8f8] {\n  color: #000000de;\n}\n.loading_text[data-v-cf0ab8f8] {\n  display: block;\n  margin-top: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.img-thumbnail[data-v-cf0ab8f8] {\n  width: 200px;\n}\n.guest-thumbnail[data-v-cf0ab8f8] {\n  width: 100px;\n}\n.registrationPriceFloating[data-v-cf0ab8f8] {\n  position: fixed;\n  right: 0;\n  top: 40%;\n  z-index: 99;\n  background: #fff !important;\n}\n.registrationPriceFloating a[data-v-cf0ab8f8] {\n  font-size: 30px;\n  padding: 15px 20px;\n}\n.registration-form[data-v-cf0ab8f8] {\n  position: relative;\n}\n.loader_area[data-v-cf0ab8f8] {\n  position: fixed;\n  z-index: 99;\n  width: 100%;\n  height: 100%;\n  background: #ffffffc2;\n  left: 0;\n  top: 0;\n}\n.loader[data-v-cf0ab8f8] {\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n.loader i.fa.fa-spin[data-v-cf0ab8f8] {\n  color: #000000de;\n}\n.loading_text[data-v-cf0ab8f8] {\n  display: block;\n  margin-top: 10px;\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -50673,6 +50673,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_upload_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__common_upload_image__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Constants__ = __webpack_require__(65);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51056,10 +51109,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "$" : "৳",
+      moneySymbol: this.immigrantStudent ? "৳" : "৳",
       loading: false,
       loadingText: "Processing...",
-      imageRulesUrl: "http://testcollage.localhost" + "/registration/photograph/rules"
+      imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
     };
   },
 
@@ -51138,6 +51191,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // this.loading = false;
         if (response.data.redirect_url) {
           window.location.replace(response.data.redirect_url);
+        } else {
+          _this.loading = false;
+          _this.$store.dispatch("setValidationErrors", { errors: response.data.message });
         }
       }).catch(function (error) {
         console.log(error.data);
@@ -51853,10 +51909,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "span",
-          {
-            staticClass:
-              "addtocalendar atc-style-theme registrationPriceFloating"
-          },
+          { staticClass: "atc-style-theme registrationPriceFloating" },
           [
             _c(
               "a",
@@ -52779,7 +52832,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Add Guest")]
+                  [_vm._v("\n        Add Guest\n      ")]
                 )
               ],
               2
@@ -52822,7 +52875,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Reserve my Seat")]
+            [_vm._v("\n        Reserve my Seat\n      ")]
           )
         ])
       ],

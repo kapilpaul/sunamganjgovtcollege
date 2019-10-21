@@ -41,45 +41,7 @@ class PaymentController extends Controller
      */
     public function process(Request $request)
     {
-        $post_data = [];
-        $post_data['total_amount'] = "1";
-        $post_data['currency'] = "USD";
-        $post_data['tran_id'] = Str::random(10);
-        $post_data['success_url'] = route('payment.status', 'success');
-        $post_data['fail_url'] = route('payment.status', 'failed');
-        $post_data['cancel_url'] = route('payment.status', 'canceled');
-
-        # CUSTOMER INFORMATION
-        $post_data['cus_name'] = "Kapil Paul";
-        $post_data['cus_email'] = "test@test.com";
-        $post_data['cus_add1'] = "Dhaka";
-        $post_data['cus_add2'] = "Dhaka";
-        $post_data['cus_city'] = "Dhaka";
-        $post_data['cus_state'] = "Dhaka";
-        $post_data['cus_postcode'] = "1000";
-        $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = '01111';
-        $post_data['cus_fax'] = "";
-
-        # SHIPMENT INFORMATION
-        $post_data['shipping_method'] = "NO";
-        $post_data['num_of_item'] = 1;
-        $post_data['product_name'] = "TEST Registration Fee";
-        $post_data['product_category'] = "Registration";
-        $post_data['product_profile'] = "non-physical-goods";
-
-        # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
-        $post_data['value_b '] = "ref002";
-        $post_data['value_c'] = "ref003";
-        $post_data['value_d'] = "ref004";
-
-        # EMI STATUS
-        $post_data['emi_option'] = "0";
-
-        $response = Payment::process($post_data);
-        return $response;
-
+        abort(404);
     }
 
     /**
@@ -101,7 +63,9 @@ class PaymentController extends Controller
 
                 switch ($paymentValid['status']) {
                     case "VALID":
-                        return $this->validPayment($paymentValid);
+                        if($paymentData = $this->validPayment($paymentValid)) {
+                            return redirect()->route('ticket.show', $request->value_a);
+                        }
                         break;
                     default:
                         break;

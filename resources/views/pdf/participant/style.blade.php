@@ -47,6 +47,9 @@
         margin-bottom: 0;
     }
 
+    .mt-2{
+        margin-top: 2px;
+    }
     .mt-5{
         margin-top: 5px;
     }

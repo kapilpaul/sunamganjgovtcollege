@@ -118,7 +118,6 @@ class ParticipantsController extends Controller
 
             return response()->json(['errors' => "Something went wrong!"], 500);
         } catch (\Exception $e) {
-            return response()->json(['errors' => $e->getMessage()], 500);
             return response()->json(['errors' => "Server Error!"], 500);
         }
     }
@@ -242,20 +241,8 @@ class ParticipantsController extends Controller
      */
     public function show($uid)
     {
-        $participant = Participants::where('uid', $uid)->with('guests')->first();
+        $participant = Participants::where('uid', $uid)->with('guests', 'payment')->first();
         $occupationDetails = json_decode($participant->occupation_details);
-//
-//        PDF::setOptions([
-//            'debugCss' => true,
-//            'debugLayout' => true,
-//            'debugLayoutLines' => true,
-//            'debugLayoutBlocks' => true,
-//            'debugLayoutInline' => true,
-//            'debugLayoutPaddingBox' => true,
-//        ]);
-//        return $pdf = PDF::loadView('pdf.participant.ticket', compact('participant'))->stream();
-//        return $pdf->download('participant.pdf');
-
         return view('admin.participants.show', compact('participant', 'occupationDetails'));
     }
 
@@ -314,8 +301,11 @@ class ParticipantsController extends Controller
             'zip_code' => 'required',
             'mobile_no' => 'required',
             'email' => 'required|email',
-            'occupation' => ['required', Rule::notIn(["-1"])],
         ];
+
+        if (!$request->current_student) {
+            $rules['occupation'] = 'required';
+        }
 
         if (count($request->guests) > 0) {
             $rules['guests.*.name'] = 'required';
@@ -385,6 +375,9 @@ class ParticipantsController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function entriesCreate()
     {
         return view('admin.participants.entries');
@@ -410,5 +403,83 @@ class ParticipantsController extends Controller
         }
 
         return response()->json(['error' => 'Server Error!'], 500);
+    }
+
+    /**
+     * @param $uid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDataAfterPayment($uid)
+    {
+        $participant = Participants::where('uid', $uid)->with('guests')->firstOrFail();
+
+        if ($participant->paid) {
+            return view('frontend.participants.ticket', compact('uid'));
+        }
+
+        //if not paid
+        return redirect()->route('registration.payment', $uid);
+    }
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function downloadTicket($uid)
+    {
+        $participant = Participants::where('uid', $uid)
+            ->where('paid', 1)
+            ->where('only_register', 0)
+            ->with('guests')->firstOrFail();
+
+        PDF::setOptions([
+            'debugCss' => true,
+            'debugLayout' => true,
+            'debugLayoutLines' => true,
+            'debugLayoutBlocks' => true,
+            'debugLayoutInline' => true,
+            'debugLayoutPaddingBox' => true,
+        ]);
+        $pdf = PDF::loadView('pdf.participant.ticket', compact('participant'));
+//        return $pdf->stream();
+        return $pdf->download('Sunamganj_College_Platinum_Jubilee_Ticket.pdf');
+    }
+
+    /**
+     * @param $uid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function registrationPayment($uid)
+    {
+        $participant = Participants::where('uid', $uid)->with('guests')->firstOrFail();
+
+        if (!$participant->paid) {
+            return view('frontend.participants.payment', compact('participant'));
+        }
+
+        //if paid
+        return redirect()->route('ticket.show', $uid);
+    }
+
+
+    /**
+     * @param $uid
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function registrationPaymentProcess($uid)
+    {
+        $participant = Participants::where('uid', $uid)->with('guests')->firstOrFail();
+        $amount = Participants::calculateFee($participant->uid);
+        $payment = $this->processPayment($amount, 'BDT', $uid, $participant->alias_id);
+        $payment = $payment->getData();
+
+        if (isset($payment->redirect_url)) {
+            if ($payment->redirect_url) {
+                return redirect($payment->redirect_url);
+            }
+        }
+
+        return redirect()->route('registration.payment', $uid);
     }
 }

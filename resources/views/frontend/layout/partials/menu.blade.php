@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('frontend.home') }}">
                 <h5 class="m-0">Sunamganj College</h5>
             </a>
         </div>
@@ -19,7 +19,7 @@
                 <li class="active"><a href="#top">Home</a></li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registraion (Participate) <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registration (Participate) <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="{{ route('participant.create', 'current-student') }}">
@@ -32,7 +32,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Only Registraion <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Only Registration <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="{{ route('participant.create', 'current-student') }}?registeronly=true">

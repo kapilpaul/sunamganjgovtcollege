@@ -2,6 +2,7 @@
 
 namespace App\Models\Participant;
 
+use App\Models\Payment\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -36,6 +37,14 @@ class Participants extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'participant_id', 'id');
+    }
+
+    /**
      * @param $participant_uid
      * @return float|int
      */
@@ -51,7 +60,7 @@ class Participants extends Model
                 $noOfGuests = count($participant->guests);
             }
 
-            if($participant->outside_of_bd) {
+            if ($participant->outside_of_bd) {
                 $fee = self::feeByStudentType('outside_of_bd');
             } else {
                 $fee = self::feeByStudentType('former_student_in_bd');
@@ -61,7 +70,7 @@ class Participants extends Model
                 $fee = self::feeByStudentType('current_student');
             }
 
-            if($participant->only_register) {
+            if ($participant->only_register) {
                 $fee = self::feeByStudentType('only_registration');
             }
 
@@ -102,7 +111,10 @@ class Participants extends Model
     public static function feeAmounts()
     {
         $fees = [
-            "only_registration" => 500,
+            "only_registration" => [
+                "self" => 500,
+                "guest" => 0
+            ],
             "nrb_only_registration" => 500,
             "former_student_in_bd" => [
                 "self" => 1000,
