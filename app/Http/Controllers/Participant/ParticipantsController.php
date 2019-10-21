@@ -110,12 +110,15 @@ class ParticipantsController extends Controller
             if ($participant = Participants::create($input)) {
                 $this->addGuest($request->guests, $participant->id);
 
-                $payment = $this->processPayment(10, 'BDT', $participant->uid->toString(), $participant->alias_id);
+                $amount = Participants::calculateFee($participant->uid);
+
+                $payment = $this->processPayment($amount, 'BDT', $participant->uid->toString(), $participant->alias_id);
                 return $payment;
             }
 
             return response()->json(['errors' => "Something went wrong!"], 500);
         } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], 500);
             return response()->json(['errors' => "Server Error!"], 500);
         }
     }
@@ -195,7 +198,7 @@ class ParticipantsController extends Controller
             foreach ($guests as $guest) {
                 $guest['alias_id'] = Str::random(12);
                 $guest['participant_id'] = $participant_id;
-                $guestImageName = $this->storeImage($guest->image, $guest['alias_id']);
+                $guestImageName = $this->storeImage($guest['image'], $guest['alias_id']);
                 $guest['image'] = Storage::url('public/images/' . $guestImageName);
 
                 Guest::create($guest);

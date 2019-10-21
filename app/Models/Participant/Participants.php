@@ -34,4 +34,90 @@ class Participants extends Model
     {
         return $this->hasMany(Guest::class, 'participant_id', 'id');
     }
+
+    /**
+     * @param $participant_uid
+     * @return float|int
+     */
+    public static function calculateFee($participant_uid)
+    {
+        $participant = Participants::where('uid', $participant_uid)->with('guests')->first();
+
+        if ($participant) {
+            $noOfGuests = $totalAmount = 0;
+            $fee = [];
+
+            if (count($participant->guests) > 0) {
+                $noOfGuests = count($participant->guests);
+            }
+
+            if($participant->outside_of_bd) {
+                $fee = self::feeByStudentType('outside_of_bd');
+            } else {
+                $fee = self::feeByStudentType('former_student_in_bd');
+            }
+
+            if ($participant->current_student) {
+                $fee = self::feeByStudentType('current_student');
+            }
+
+            if($participant->only_register) {
+                $fee = self::feeByStudentType('only_registration');
+            }
+
+            $guestFee = ($noOfGuests * $fee['guest']);
+            $totalAmount = $fee['self'] + $guestFee;
+
+            return $totalAmount;
+        }
+    }
+
+    /**
+     * @param $studentType
+     * @return mixed
+     */
+    public static function feeByStudentType($studentType)
+    {
+        $fees = self::feeAmounts();
+
+        switch ($studentType) {
+            case "only_registration" :
+                return $fees['only_registration'];
+                break;
+            case "outside_of_bd" :
+                return $fees['immigrant_former_student'];
+                break;
+            case "current_student" :
+                return $fees['current_student'];
+                break;
+            default:
+                return $fees['former_student_in_bd'];
+                break;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public static function feeAmounts()
+    {
+        $fees = [
+            "only_registration" => 500,
+            "nrb_only_registration" => 500,
+            "former_student_in_bd" => [
+                "self" => 1000,
+                "guest" => 500
+            ],
+            "immigrant_former_student" => [
+                "self" => 1000,
+                "guest" => 500,
+            ],
+            "current_student" => [
+                "self" => 300,
+                "guest" => 300,
+            ]
+        ];
+
+        return $fees;
+    }
 }
