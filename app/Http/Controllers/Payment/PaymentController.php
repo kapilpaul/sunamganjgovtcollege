@@ -57,6 +57,10 @@ class PaymentController extends Controller
             abort(404);
         }
 
+        if($status == 'failed' || $status == 'canceled') {
+            return redirect()->route('registration.payment', $request->value_a)->with(['error' => "Payment $status"]);
+        }
+
         if ($request->status == 'VALID') {
             if (isset($request->val_id)) {
                 $paymentValid = Payment::validation($request->val_id);

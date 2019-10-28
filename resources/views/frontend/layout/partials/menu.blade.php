@@ -10,7 +10,8 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ route('frontend.home') }}">
-                <h5 class="m-0">Sunamganj College</h5>
+                <h5 class="m-0 fz-17">Sunamganj College</h5>
+                <p class="m-0 fz-11">Organized by former students and students</p>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -32,13 +33,8 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Only Registration <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Only Registration (Magazine) <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ route('participant.create', 'current-student') }}?registeronly=true">
-                                Current Student
-                            </a>
-                        </li>
                         <li><a href="{{ route('participant.create', 'former-student') }}?registeronly=true">Former Student</a></li>
                         <li><a href="{{ route('participant.create', 'nrb-former-student') }}?registeronly=true">Non Resident Bangladeshi Former Student</a></li>
                     </ul>

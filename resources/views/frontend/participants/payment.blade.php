@@ -8,6 +8,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+
+                @if(session('error'))
+                    <div class="alert alert-danger mt-20" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <div class="mx-50 mb-100 text-center">
                     <p class="lead">Thank you for register in Sunamganj Govt. College's Platinum Jubilee 2020</p>
                     <p>You are one step away from Registration. Please pay by click on the button</p>

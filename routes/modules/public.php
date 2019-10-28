@@ -14,9 +14,7 @@ Route::group(['namespace' => 'Participant'], function () {
         Route::post('register/store', 'ParticipantsController@store')->name('api.participant.store');
 
     } else {
-        Route::get('/', function () {
-            return redirect()->route('participant.create', 'former-student');
-        })->name('frontend.home');
+        Route::view('/', 'frontend.home.index')->name('frontend.home');
 
         Route::get('register/{studentStatus?}', 'ParticipantsController@create')->name('participant.create');
         Route::get('register/show/{id}', 'ParticipantsController@show')->name('participant.show');

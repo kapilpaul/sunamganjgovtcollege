@@ -153,7 +153,7 @@
             placeholder="+8801711111111"
             :required="true"
             v-model="participantData.mobile_no"
-            helptext="Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+            helptext="Please DO NOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
           ></input-text>
         </div>
 
@@ -163,7 +163,7 @@
             name="email"
             placeholder="yourmail@mail.com"
             v-model="participantData.email"
-            helptext="Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+            helptext="Please use do not use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted email can disturb you."
           ></input-text>
         </div>
       </div>
@@ -356,7 +356,7 @@
       <div class="row">
         <div class="col-md-offset-4 col-md-4">
           <div class="pricing-item highlighted-plan wow zoomIn mt-20">
-            <div class="plan-name">Registration Price</div>
+            <div class="plan-name">Registration Fee</div>
             <div class="price">
               <span class="curr">{{ moneySymbol }}</span>
               {{ totalAmount }}
@@ -442,6 +442,7 @@ export default {
         "Lawyer",
         "Service holder",
         "Business Person",
+        "Stay Home Parents",
         "House wife",
         "Retired Person",
         "Non-Resident",

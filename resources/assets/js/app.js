@@ -38,12 +38,14 @@ import { store } from "./store/index";
 
 import participantCreate from "./components/participants/create";
 import participantEntries from "./components/participants/entries";
+import reserveSeat from "./components/home/reserve-seat";
 
 const app = new Vue({
   el: "#sunamganj-college",
   store,
   components: {
     participantCreate,
-    participantEntries
+    participantEntries,
+    reserveSeat
   }
 });

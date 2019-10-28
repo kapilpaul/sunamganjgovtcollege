@@ -14603,7 +14603,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(83);
+module.exports = __webpack_require__(88);
 
 
 /***/ }),
@@ -14619,6 +14619,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_participants_create___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_participants_create__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_participants_entries__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_participants_entries___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_participants_entries__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_home_reserve_seat__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_home_reserve_seat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_home_reserve_seat__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -14654,12 +14656,14 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function
 
 
 
+
 var app = new Vue({
   el: "#sunamganj-college",
   store: __WEBPACK_IMPORTED_MODULE_1__store_index__["a" /* store */],
   components: {
     participantCreate: __WEBPACK_IMPORTED_MODULE_2__components_participants_create___default.a,
-    participantEntries: __WEBPACK_IMPORTED_MODULE_3__components_participants_entries___default.a
+    participantEntries: __WEBPACK_IMPORTED_MODULE_3__components_participants_entries___default.a,
+    reserveSeat: __WEBPACK_IMPORTED_MODULE_4__components_home_reserve_seat___default.a
   }
 });
 
@@ -51104,7 +51108,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       countries: __WEBPACK_IMPORTED_MODULE_4__Constants__["a" /* countries */],
       classes: ["1st year HSC", "1st year BA", "1st year BSc", "1st year BCom", "1st Year 3-4 year Hounors", "1st year Master"],
-      occupations: ["Doctor", "Engineer", "Lawyer", "Service holder", "Business Person", "House wife", "Retired Person", "Non-Resident", "Others"],
+      occupations: ["Doctor", "Engineer", "Lawyer", "Service holder", "Business Person", "Stay Home Parents", "House wife", "Retired Person", "Non-Resident", "Others"],
       relations: ["Husband", "Wife", "Son", "Daughter", "Relative", "Personal Staff", "Driver", "Maids", "Others"],
       componentKey: 0,
       selfRegPrice: 0,
@@ -51877,7 +51881,7 @@ var countries = ["Afghanistan", "Åland Islands", "Albania", "Algeria", "America
 
 var registrationPrice = {
     only_registration: 500,
-    nrb_only_registration: 5,
+    nrb_only_registration: 500,
     former_student_in_bd: {
         self: 1000,
         guest: 500
@@ -52299,7 +52303,7 @@ var render = function() {
                   placeholder: "+8801711111111",
                   required: true,
                   helptext:
-                    "Please DONOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+                    "Please DO NOT write your main mobile number (If you wirte It may disrupts your daily life, unwanted call can disturb you."
                 },
                 model: {
                   value: _vm.participantData.mobile_no,
@@ -52323,7 +52327,7 @@ var render = function() {
                   name: "email",
                   placeholder: "yourmail@mail.com",
                   helptext:
-                    "Please use donot use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted call can disturb you."
+                    "Please use do not use you main mail id, use other mail id (If you wirte It may disrupts your daily life, unwanted email can disturb you."
                 },
                 model: {
                   value: _vm.participantData.email,
@@ -52846,7 +52850,7 @@ var render = function() {
               { staticClass: "pricing-item highlighted-plan wow zoomIn mt-20" },
               [
                 _c("div", { staticClass: "plan-name" }, [
-                  _vm._v("Registration Price")
+                  _vm._v("Registration Fee")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "price" }, [
@@ -53664,6 +53668,365 @@ if (false) {
 
 /***/ }),
 /* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(84)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(86)
+/* template */
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-618b98c2"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/home/reserve-seat.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-618b98c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-618b98c2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(85);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("0c409a26", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-618b98c2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reserve-seat.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-618b98c2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reserve-seat.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "reserve-seat",
+  data: function data() {
+    return {
+      registerFor: "",
+      studentType: "",
+      nrb: "",
+      addClass: "col-md-12",
+      url: "http://sunamganjgovtcollege.localhost",
+      loader: false
+    };
+  },
+
+  watch: {
+    registerFor: function registerFor(value) {
+      if (value === "participate") {
+        this.addClass = "col-md-6";
+      } else {
+        this.addClass = "col-md-12";
+      }
+    },
+    studentType: function studentType(value) {
+      if (this.studentType === "current") {
+        this.loader = true;
+
+        window.location = this.url + "/register/current-student";
+      }
+    },
+    nrb: function nrb(value) {
+      this.loader = true;
+
+      var param = "";
+      if (this.registerFor === "magazine" && this.studentType === "former") {
+        param = "?registeronly=true";
+      }
+
+      if (value) {
+        window.location = this.url + "/register/nrb-former-student" + param;
+      } else {
+        window.location = this.url + "/register/former-student" + param;
+      }
+    }
+  },
+  methods: {},
+  deactivated: function deactivated() {
+    this.registerFor = "";
+    this.studentType = "";
+    this.nrb = "";
+    this.addClass = "col-md-12";
+  }
+});
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("p", { staticClass: "text-center fz-25 mb-30" }, [
+      _vm._v("Register For")
+    ]),
+    _vm._v(" "),
+    _vm.loader
+      ? _c("div", { staticClass: "loader text-center pb-30" }, [
+          _c("i", { staticClass: "fa fa-spinner fa-spin fa-3x" })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.registerFor === ""
+      ? _c("div", { staticClass: "row mb-20" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-success btn-block",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.registerFor = "participate"
+                  }
+                }
+              },
+              [_vm._v("\n        Participate\n      ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-success btn-block",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.registerFor = "magazine"
+                  }
+                }
+              },
+              [_vm._v("\n        Magazine\n      ")]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.registerFor !== "" && _vm.studentType === ""
+      ? _c("div", { staticClass: "row mb-20" }, [
+          _c("div", { class: _vm.addClass }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-success btn-block",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.studentType = "former"
+                  }
+                }
+              },
+              [_vm._v("\n        Former Student\n      ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { class: _vm.addClass }, [
+            _vm.registerFor === "participate"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-success btn-block",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.studentType = "current"
+                      }
+                    }
+                  },
+                  [_vm._v("\n        Current Student\n      ")]
+                )
+              : _vm._e()
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.studentType === "former"
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-success btn-block",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.nrb = true
+                  }
+                }
+              },
+              [_vm._v("\n        Immigrant\n      ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-success btn-block",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.nrb = false
+                  }
+                }
+              },
+              [_vm._v("\n        Native\n      ")]
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-618b98c2", module.exports)
+  }
+}
+
+/***/ }),
+/* 88 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

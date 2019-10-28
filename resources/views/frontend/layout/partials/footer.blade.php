@@ -6,7 +6,7 @@
         <a href="#" class="wow zoomIn" data-wow-delay="0.2s"> <i class="fa fa-facebook"></i> </a>
         <a href="#" class="wow zoomIn" data-wow-delay="0.4s"> <i class="fa fa-linkedin"></i> </a>
     </div>
-    <p> <small class="text-muted">Copyright © 2015. All rights reserved.</small></p>
+    <p> <small class="text-muted">Copyright © 2019. All rights reserved.</small></p>
 
 </footer>
 
@@ -32,8 +32,9 @@
 <script src="{{ asset('assets/website/js/plugins/magnific-popup.js') }}"></script>
 <script src="{{ asset('assets/website/js/plugins/validate.js') }}"></script>
 <script src="{{ asset('assets/website/js/plugins/appear.js') }}"></script>
-{{--<script src="{{ asset('assets/website/js/plugins/count-to.js') }}"></script>--}}
-{{--<script src="{{ asset('assets/website/js/plugins/nicescroll.js') }}"></script>--}}
+
+@stack('footer_middle_js')
+
 
 <!-- JS Includes -->
 <script src="{{ asset('assets/website/js/includes/subscribe.js') }}"></script>

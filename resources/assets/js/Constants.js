@@ -252,7 +252,7 @@ export const countries = [
 
 export const registrationPrice = {
     only_registration: 500,
-    nrb_only_registration: 5,
+    nrb_only_registration: 500,
     former_student_in_bd: {
         self: 1000,
         guest: 500,

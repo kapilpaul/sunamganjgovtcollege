@@ -78,7 +78,7 @@ class ParticipantsController extends Controller
             abort(404);
         }
 
-        if (Input::get('registeronly')) {
+        if (Input::get('registeronly') && ($studentStatus != 'current-student')) {
             $registerOnly = "true";
         }
 
@@ -414,7 +414,7 @@ class ParticipantsController extends Controller
         $participant = Participants::where('uid', $uid)->with('guests')->firstOrFail();
 
         if ($participant->paid) {
-            return view('frontend.participants.ticket', compact('uid'));
+            return view('frontend.participants.ticket', compact('uid', 'participant'));
         }
 
         //if not paid
