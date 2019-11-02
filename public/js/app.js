@@ -51113,7 +51113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "৳" : "৳",
+      moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
       loadingText: "Processing...",
       imageRulesUrl: "http://sunamganjgovtcollege.localhost" + "/registration/photograph/rules"
@@ -51881,14 +51881,14 @@ var countries = ["Afghanistan", "Åland Islands", "Albania", "Algeria", "America
 
 var registrationPrice = {
     only_registration: 500,
-    nrb_only_registration: 500,
+    nrb_only_registration: 6,
     former_student_in_bd: {
         self: 1000,
         guest: 500
     },
     immigrant_former_student: {
-        self: 1000,
-        guest: 500
+        self: 12,
+        guest: 6
     },
     current_student: {
         self: 300,
