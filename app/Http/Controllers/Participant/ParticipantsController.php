@@ -111,8 +111,9 @@ class ParticipantsController extends Controller
                 $this->addGuest($request->guests, $participant->id);
 
                 $amount = Participants::calculateFee($participant->uid);
+                $currency = $participant->outside_of_bd ? "USD" : "BDT";
 
-                $payment = $this->processPayment($amount, 'BDT', $participant->uid->toString(), $participant->alias_id);
+                $payment = $this->processPayment($amount, $currency, $participant->uid->toString(), $participant->alias_id);
                 return $payment;
             }
 
@@ -471,7 +472,8 @@ class ParticipantsController extends Controller
     {
         $participant = Participants::where('uid', $uid)->with('guests')->firstOrFail();
         $amount = Participants::calculateFee($participant->uid);
-        $payment = $this->processPayment($amount, 'BDT', $uid, $participant->alias_id);
+        $currency = $participant->outside_of_bd ? "USD" : "BDT";
+        $payment = $this->processPayment($amount, $currency, $uid, $participant->alias_id);
         $payment = $payment->getData();
 
         if (isset($payment->redirect_url)) {

@@ -462,7 +462,7 @@ export default {
       componentKey: 0,
       selfRegPrice: 0,
       guestRegPrice: 0,
-      moneySymbol: this.immigrantStudent ? "৳" : "৳",
+      moneySymbol: this.immigrantStudent ? "$" : "৳",
       loading: false,
       loadingText: "Processing...",
       imageRulesUrl: process.env.MIX_APP_ROOT + "/registration/photograph/rules"
